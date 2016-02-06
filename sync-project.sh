@@ -17,7 +17,7 @@ fi
 CAMEL=$(head -n1 "${TARGET_PROJECT}"/README.md | awk '{ print $2 }' | grep -E '^([A-Z][a-z0-9]+){2,}$') || CAMEL=""
 
 if [ "${CAMEL}" = "" ]; then
-    echo "Could not determine project name."
+    echo "Could not determine the target projects name."
 
     exit 1
 fi

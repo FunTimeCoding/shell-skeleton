@@ -118,9 +118,3 @@ This section explains how to write unified readme files.
 * One blank line after every headline.
 * Two blank lines after every section except the last. A section is every part of a document starting with a headline, but not the main headline.
 * If a section has no body, put only one blank line afterwards instead of two.
-
-
-## Contact
-
-If you do or do not like these conventions, feel free to contact me about them.
-Critique is always welcome. Useful additions and refinements also.
