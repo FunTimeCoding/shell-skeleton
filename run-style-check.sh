@@ -14,14 +14,17 @@ if [ "${1}" = "--ci-mode" ]; then
     CONTINUOUS_INTEGRATION_MODE=true
 fi
 
+#     12345678901234567890123456789012345678901234567890123456789012345678901234567890
 echo "================================================================================"
 echo
 
 echo "Run ShellCheck."
-# shellcheck disable=SC2016
+
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+    # shellcheck disable=SC2016
     find . -name '*.sh' -and -not -path '*/vendor/*' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \; | tee build/log/shellcheck.txt
 else
+    # shellcheck disable=SC2016
     find . -name '*.sh' -and -not -path '*/vendor/*' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;
 fi
 

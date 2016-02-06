@@ -21,7 +21,7 @@ Install development tools.
 sudo apt-get install shellcheck
 ```
 
-Run code style check.
+Run style check and show all concerns.
 
 ```sh
 ./run-style-check.sh
