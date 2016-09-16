@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 CONFIG=""
-VERBOSE=false
 
 function_exists()
 {
@@ -17,22 +16,13 @@ while true; do
             shift 2
             ;;
         --help)
-            echo "Global usage: ${0} [--verbose][--debug][--help][--config CONFIG]"
+            echo "Global usage: ${0} [--help][--config CONFIG]"
 
             if function_exists usage; then
                 usage
             fi
 
             exit 0
-            ;;
-        --verbose)
-            VERBOSE=true
-            echo "Verbose mode enabled."
-            shift
-            ;;
-        --debug)
-            set -x
-            shift
             ;;
         *)
             break
@@ -42,4 +32,3 @@ done
 
 OPTIND=1
 export CONFIG
-export VERBOSE
