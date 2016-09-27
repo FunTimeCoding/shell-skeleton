@@ -8,7 +8,7 @@ fi
 
 CONTINUOUS_INTEGRATION_MODE=false
 
-if [ "${1}" = "--ci-mode" ]; then
+if [ "${1}" = --ci-mode ]; then
     shift
     mkdir -p build/log
     CONTINUOUS_INTEGRATION_MODE=true
@@ -20,13 +20,28 @@ echo
 
 echo "Run ShellCheck."
 
+OPERATING_SYSTEM=$(uname)
+
+if [ "${OPERATING_SYSTEM}" = Darwin ]; then
+    FIND=gfind
+else
+    FIND=find
+fi
+
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     # shellcheck disable=SC2016
-    find . -name '*.sh' -and -not -path '*/vendor/*' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \; | tee build/log/shellcheck.txt
+    ${FIND} . -name '*.sh' -regextype posix-extended ! -regex '^.*/(build|.git)/.*$' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \; | tee build/log/shellcheck.txt
 else
     # shellcheck disable=SC2016
-    find . -name '*.sh' -and -not -path '*/vendor/*' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;
+    ${FIND} . -name '*.sh' -regextype posix-extended ! -regex '^.*/(build|.git)/.*$' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;
 fi
+
+echo
+echo "================================================================================"
+echo
+
+echo "Search for empty files."
+find . -empty -and -not -path '*/.git/*' -ls
 
 echo
 echo "================================================================================"
