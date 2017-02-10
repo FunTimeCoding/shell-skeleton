@@ -20,9 +20,9 @@ echo
 
 echo "Run ShellCheck."
 
-OPERATING_SYSTEM=$(uname)
+SYSTEM=$(uname)
 
-if [ "${OPERATING_SYSTEM}" = Darwin ]; then
+if [ "${SYSTEM}" = Darwin ]; then
     FIND=gfind
 else
     FIND=find
@@ -41,7 +41,7 @@ echo "==========================================================================
 echo
 
 echo "Search for empty files."
-find . -empty -and -not -path '*/.git/*' -ls
+${FIND} . -empty -and -not -path '*/.git/*' -ls
 
 echo
 echo "================================================================================"
