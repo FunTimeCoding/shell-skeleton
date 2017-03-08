@@ -22,19 +22,20 @@ if [ "${CAMEL}" = "" ]; then
     exit 1
 fi
 
-OPERATING_SYSTEM=$(uname)
+SYSTEM=$(uname)
 
-if [ "${OPERATING_SYSTEM}" = "Linux" ]; then
-    FIND="find"
-    SED="sed"
+if [ "${SYSTEM}" = Darwin ]; then
+    FIND=gfind
+    SED=gsed
 else
-    FIND="gfind"
-    SED="gsed"
+    FIND=find
+    SED=sed
 fi
 
 cp ./*.md "${TARGET_PROJECT}"
 cp ./*.sh "${TARGET_PROJECT}"
 cp .gitignore "${TARGET_PROJECT}"
+cp dict/* "${TARGET_PROJECT}/dict"
 DASH=$(echo "${CAMEL}" | ${SED} -E 's/([A-Za-z0-9])([A-Z])/\1-\2/g' | tr '[:upper:]' '[:lower:]')
 INITIALS=$(echo "${CAMEL}" | ${SED} 's/\([A-Z]\)[a-z]*/\1/g' | tr '[:upper:]' '[:lower:]')
 UNDERSCORE=$(echo "${DASH}" | ${SED} -E 's/-/_/g')
