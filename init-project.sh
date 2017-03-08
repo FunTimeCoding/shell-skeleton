@@ -2,7 +2,7 @@
 # This tool is to initialize the project after cloning.
 # The goal is to make easy to create and test new projects.
 
-CAMEL=$(echo "${1}" | grep -E '^([A-Z]+[a-z0-9]*){2,}$') || CAMEL=""
+CAMEL=$(echo "${1}" | grep -E '^([A-Z]+[a-z0-9]*){1,}$') || CAMEL=""
 
 if [ "${CAMEL}" = "" ]; then
     echo "Usage: ${0} UpperCamelCaseName"

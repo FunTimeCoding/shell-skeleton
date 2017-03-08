@@ -14,7 +14,7 @@ if [ ! -d "${TARGET_PROJECT}" ]; then
     exit 1
 fi
 
-CAMEL=$(head -n1 "${TARGET_PROJECT}"/README.md | awk '{ print $2 }' | grep -E '^([A-Z]+[a-z0-9]*){2,}$') || CAMEL=""
+CAMEL=$(head -n1 "${TARGET_PROJECT}"/README.md | awk '{ print $2 }' | grep -E '^([A-Z]+[a-z0-9]*){1,}$') || CAMEL=""
 
 if [ "${CAMEL}" = "" ]; then
     echo "Could not determine the projects name in ${TARGET_PROJECT}."
