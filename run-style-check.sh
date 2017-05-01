@@ -6,6 +6,12 @@ if [ "$(command -v shellcheck || true)" = "" ]; then
     exit 1
 fi
 
+if [ "${1}" = --help ]; then
+    echo "Usage: ${0} [--ci-mode]"
+
+    exit 0
+fi
+
 CONCERN_FOUND=false
 CONTINUOUS_INTEGRATION_MODE=false
 
@@ -23,67 +29,79 @@ else
     FIND=find
 fi
 
-# shellcheck disable=SC2016
-SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex '^.*/(build|\.git|tmp)/.*$' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+FILTER="^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$"
 
-if [ ! "${SHELL_SCRIPT_CONCERNS}" = "" ]; then
+if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     CONCERN_FOUND=true
-    echo "Shell script concerns:"
-    echo "${SHELL_SCRIPT_CONCERNS}"
+    FILES=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -printf '%P\n')
 
-    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${SHELL_SCRIPT_CONCERNS}" > build/log/shellcheck.txt
+    for FILE in ${FILES}; do
+        FILE_REPLACED=$(echo "${FILE}" | sed 's/\//-/')
+        shellcheck --format checkstyle ${FILE} > build/log/checkstyle-${FILE_REPLACED}.xml || true
+    done
+else
+    # shellcheck disable=SC2016
+    SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+
+    if [ ! "${SHELL_SCRIPT_CONCERNS}" = "" ]; then
+        echo "Shell script concerns:"
+        echo "${SHELL_SCRIPT_CONCERNS}"
+        echo
     fi
 fi
 
 # shellcheck disable=SC2016
-EMPTY_FILES=$(${FIND} . -empty -regextype posix-extended ! -regex '^.*/(build|\.git|\.vagrant|tmp)/.*$')
+EMPTY_FILES=$(${FIND} . -empty -regextype posix-extended ! -regex "${FILTER}")
 
 if [ ! "${EMPTY_FILES}" = "" ]; then
     CONCERN_FOUND=true
-    echo
-    echo "Empty files:"
-    echo
-    echo "${EMPTY_FILES}"
 
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${EMPTY_FILES}" > build/log/empty-files.txt
+    else
+        echo "Empty files:"
+        echo
+        echo "${EMPTY_FILES}"
+        echo
     fi
 fi
 
 # shellcheck disable=SC2016
-TO_DOS=$(${FIND} . -regextype posix-extended -type f -and ! -regex '^.*/(\.git|\.idea)/.*$' -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
+TO_DOS=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${TO_DOS}" = "" ]; then
     CONCERN_FOUND=true
-    echo
-    echo "To dos:"
-    echo
-    echo "${TO_DOS}"
 
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${TO_DOS}" > build/log/to-dos.txt
+    else
+        echo "To dos:"
+        echo
+        echo "${TO_DOS}"
+        echo
     fi
 fi
 
 # shellcheck disable=SC2016
-SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f -and ! -regex '^.*/(\.git|\.idea)/.*$' -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
+SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${SHELLCHECK_IGNORES}" = "" ]; then
     CONCERN_FOUND=true
-    echo
-    echo "Shellcheck ignores:"
-    echo
-    echo "${SHELLCHECK_IGNORES}"
 
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${SHELLCHECK_IGNORES}" > build/log/shellcheck-ignores.txt
+    else
+        echo "Shellcheck ignores:"
+        echo
+        echo "${SHELLCHECK_IGNORES}"
+        echo
     fi
 fi
 
 if [ "${CONCERN_FOUND}" = true ]; then
-    echo
-    echo "Concern(s) found."
+    if [ "${CONTINUOUS_INTEGRATION_MODE}" = false ]; then
+        echo "Concern(s) found."
+    fi
 
     exit 2
 fi
