@@ -32,21 +32,20 @@ fi
 FILTER="^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$"
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    CONCERN_FOUND=true
     FILES=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -printf '%P\n')
 
     for FILE in ${FILES}; do
         FILE_REPLACED=$(echo "${FILE}" | sed 's/\//-/')
-        shellcheck --format checkstyle ${FILE} > build/log/checkstyle-${FILE_REPLACED}.xml || true
+        shellcheck --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
     done
 else
     # shellcheck disable=SC2016
     SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
 
     if [ ! "${SHELL_SCRIPT_CONCERNS}" = "" ]; then
-        echo "Shell script concerns:"
+        CONCERN_FOUND=true
+        echo "(WARNING) Shell script concerns:"
         echo "${SHELL_SCRIPT_CONCERNS}"
-        echo
     fi
 fi
 
@@ -59,10 +58,10 @@ if [ ! "${EMPTY_FILES}" = "" ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${EMPTY_FILES}" > build/log/empty-files.txt
     else
-        echo "Empty files:"
+        echo
+        echo "(WARNING) Empty files:"
         echo
         echo "${EMPTY_FILES}"
-        echo
     fi
 fi
 
@@ -70,15 +69,13 @@ fi
 TO_DOS=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${TO_DOS}" = "" ]; then
-    CONCERN_FOUND=true
-
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${TO_DOS}" > build/log/to-dos.txt
     else
-        echo "To dos:"
+        echo
+        echo "(NOTICE) To dos:"
         echo
         echo "${TO_DOS}"
-        echo
     fi
 fi
 
@@ -86,21 +83,20 @@ fi
 SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${SHELLCHECK_IGNORES}" = "" ]; then
-    CONCERN_FOUND=true
-
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${SHELLCHECK_IGNORES}" > build/log/shellcheck-ignores.txt
     else
-        echo "Shellcheck ignores:"
+        echo
+        echo "(NOTICE) Shellcheck ignores:"
         echo
         echo "${SHELLCHECK_IGNORES}"
-        echo
     fi
 fi
 
 if [ "${CONCERN_FOUND}" = true ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = false ]; then
-        echo "Concern(s) found."
+        echo
+        echo "Concern(s) of category WARNING found." >&2
     fi
 
     exit 2
