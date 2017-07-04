@@ -32,4 +32,22 @@ while true; do
 done
 
 OPTIND=1
-export CONFIG
+
+if [ "${CONFIG}" = "" ]; then
+    CONFIG="${HOME}/.shell-skeleton.sh"
+fi
+
+if [ ! -f "${CONFIG}" ]; then
+    echo "Config missing: ${CONFIG}"
+
+    exit 1
+fi
+
+# shellcheck source=/dev/null
+. "${CONFIG}"
+
+if [ "${TOKEN}" = "" ]; then
+    echo "TOKEN not set."
+
+    exit 1
+fi
