@@ -2,14 +2,6 @@
 
 CONFIG=""
 
-function_exists()
-{
-    # shellcheck disable=SC2039
-    declare -f -F "${1}" > /dev/null
-
-    return $?
-}
-
 while true; do
     case ${1} in
         --config)
@@ -19,7 +11,7 @@ while true; do
         --help)
             echo "Global usage: ${0} [--help][--config CONFIG]"
 
-            if function_exists usage; then
+            if command -v usage > /dev/null; then
                 usage
             fi
 
