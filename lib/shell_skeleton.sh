@@ -4,10 +4,6 @@ CONFIG=""
 
 while true; do
     case ${1} in
-        --config)
-            CONFIG=${2-}
-            shift 2
-            ;;
         --help)
             echo "Global usage: ${0} [--help][--config CONFIG]"
 
@@ -16,6 +12,10 @@ while true; do
             fi
 
             exit 0
+            ;;
+        --config)
+            CONFIG=${2-}
+            shift 2
             ;;
         *)
             break
