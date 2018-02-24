@@ -25,22 +25,23 @@ fi
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Darwin ]; then
-    FIND=gfind
-    SED=gsed
+    FIND="gfind"
+    SED="gsed"
 else
-    FIND=find
-    SED=sed
+    FIND="find"
+    SED="sed"
 fi
 
 cp ./*.md "${TARGET}"
-cp ./*.sh "${TARGET}"
-cp dict/* "${TARGET}/dict"
+mkdir -p "${TARGET}/documentation"
+cp -R documentation/* "${TARGET}/documentation"
+mkdir -p "${TARGET}/script"
+cp -R script/* "${TARGET}/script"
 cp .gitignore "${TARGET}"
 DASH=$(echo "${CAMEL}" | ${SED} --regexp-extended 's/([A-Za-z0-9])([A-Z])/\1-\2/g' | tr '[:upper:]' '[:lower:]')
 INITIALS=$(echo "${CAMEL}" | ${SED} 's/\([A-Z]\)[a-z]*/\1/g' | tr '[:upper:]' '[:lower:]')
 UNDERSCORE=$(echo "${DASH}" | ${SED} --regexp-extended 's/-/_/g')
 cd "${TARGET}" || exit 1
-rm init-project.sh sync-project.sh
+rm -rf script/skeleton
 # shellcheck disable=SC2016
 ${FIND} . -type f -regextype posix-extended ! -regex '^.*/(build|\.git|\.idea)/.*$' -exec sh -c '${1} -i -e "s/ShellSkeleton/${2}/g" -e "s/shell-skeleton/${3}/g" -e "s/shell_skeleton/${4}/g" -e "s/bin\/ss/bin\/${5}/g" "${6}"' '_' "${SED}" "${CAMEL}" "${DASH}" "${UNDERSCORE}" "${INITIALS}" '{}' \;
-echo "Done. Files were copied to ${TARGET} and modified. Review those changes."
