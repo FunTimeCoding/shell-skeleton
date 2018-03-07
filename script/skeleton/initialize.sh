@@ -27,3 +27,4 @@ UNDERSCORE=$(echo "${DASH}" | ${SED} -E 's/-/_/g')
 ${FIND} . -type f -regextype posix-extended ! -regex '^.*/(\.git|\.idea)/.*$' -exec sh -c '${1} -i -e "s/ShellSkeleton/${2}/g" -e "s/shell-skeleton/${3}/g" -e "s/shell_skeleton/${4}/g" -e "s/bin\/ss/bin\/${5}/g" "${6}"' '_' "${SED}" "${NAME}" "${DASH}" "${UNDERSCORE}" "${INITIALS}" '{}' \;
 git mv lib/shell_skeleton.sh lib/"${UNDERSCORE}".sh
 git mv bin/ss bin/"${INITIALS}"
+echo "# This dictionary file is for domain language." > "documentation/dictionary/${DASH}.dic"
