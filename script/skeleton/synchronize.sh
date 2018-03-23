@@ -38,6 +38,7 @@ cp -R documentation/* "${TARGET}/documentation"
 mkdir -p "${TARGET}/script"
 cp -R script/* "${TARGET}/script"
 cp .gitignore "${TARGET}"
+cp Vagrantfile "${TARGET}"
 cd "${TARGET}" || exit 1
 rm -rf script/skeleton
 DASH=$(echo "${NAME}" | ${SED} --regexp-extended 's/([A-Za-z0-9])([A-Z])/\1-\2/g' | tr '[:upper:]' '[:lower:]')
