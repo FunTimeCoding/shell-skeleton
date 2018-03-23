@@ -5,7 +5,7 @@ Vagrant.configure('2') do |config|
   if File.exist?('tmp/ethernet-device.txt')
     bridge = File.read('tmp/ethernet-device.txt').chomp
   else
-    if RbConfig::CONFIG['host_os'] =~ /mswin32/
+    if RbConfig::CONFIG['host_os'] =~ /mswin32|mingw32/
       bridge = 'Ethernet'
     else
       bridge = 'eth0'
@@ -17,7 +17,7 @@ Vagrant.configure('2') do |config|
   config.vm.network :public_network, bridge: bridge
   config.vm.network :private_network, ip: '192.168.42.3'
 
-  if RbConfig::CONFIG['host_os'] =~ /mswin32/
+  if RbConfig::CONFIG['host_os'] =~ /mswin32|mingw32/
     config.vm.synced_folder '.', '/vagrant', type: 'virtualbox'
   else
     config.vm.synced_folder '.', '/vagrant', type: 'nfs'
