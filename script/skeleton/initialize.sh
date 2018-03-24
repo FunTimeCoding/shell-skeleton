@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
-NAME=$(echo "${1}" | grep --extended-regexp '^([A-Z]+[a-z0-9]*){1,}$') || NAME=""
+NAME=$(echo "${1}" | grep --extended-regexp '^([A-Z]+[a-z0-9]*){1,}$') || NAME=''
 
-if [ "${NAME}" = "" ]; then
+if [ "${NAME}" = '' ]; then
     echo "Usage: ${0} NAME"
     echo "Name must be in upper camel case."
 

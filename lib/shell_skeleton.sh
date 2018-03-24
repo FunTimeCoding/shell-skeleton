@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-CONFIG=""
+CONFIG=''
 
 while true; do
     case ${1} in
@@ -25,7 +25,7 @@ done
 
 OPTIND=1
 
-if [ "${CONFIG}" = "" ]; then
+if [ "${CONFIG}" = '' ]; then
     CONFIG="${HOME}/.shell-skeleton.sh"
 fi
 
@@ -38,7 +38,7 @@ fi
 # shellcheck source=/dev/null
 . "${CONFIG}"
 
-if [ "${TOKEN}" = "" ]; then
+if [ "${TOKEN}" = '' ]; then
     echo "TOKEN not set."
 
     exit 1

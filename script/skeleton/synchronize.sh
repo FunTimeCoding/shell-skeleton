@@ -2,7 +2,7 @@
 
 TARGET="${1}"
 
-if [ "${TARGET}" = "" ]; then
+if [ "${TARGET}" = '' ]; then
     echo "Usage: ${0} TARGET"
 
     exit 1
@@ -14,9 +14,9 @@ if [ ! -d "${TARGET}" ]; then
     exit 1
 fi
 
-NAME=$(head -n 1 "${TARGET}/README.md" | awk '{ print $2 }' | grep --extended-regexp '^([A-Z]+[a-z0-9]*){1,}$') || NAME=""
+NAME=$(head -n 1 "${TARGET}/README.md" | awk '{ print $2 }' | grep --extended-regexp '^([A-Z]+[a-z0-9]*){1,}$') || NAME=''
 
-if [ "${NAME}" = "" ]; then
+if [ "${NAME}" = '' ]; then
     echo "Could not determine the project name."
 
     exit 1
