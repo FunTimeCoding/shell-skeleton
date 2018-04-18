@@ -36,7 +36,7 @@ script\vagrant\create.bat
 Run style check.
 
 ```sh
-script/check.sh
+script/check.sh [--help]
 ```
 
 Build project.
