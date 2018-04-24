@@ -1,11 +1,11 @@
 #!/bin/sh -e
 
-CONFIG=''
+CONFIGURATION=''
 
 while true; do
     case ${1} in
         --help)
-            echo "Global usage: ${0} [--help][--config CONFIG]"
+            echo "Global usage: ${0} [--help][--configuration CONFIGURATION]"
 
             if command -v usage > /dev/null; then
                 usage
@@ -13,8 +13,8 @@ while true; do
 
             exit 0
             ;;
-        --config)
-            CONFIG=${2-}
+        --configuration)
+            CONFIGURATION=${2-}
             shift 2
             ;;
         *)
@@ -25,18 +25,18 @@ done
 
 OPTIND=1
 
-if [ "${CONFIG}" = '' ]; then
-    CONFIG="${HOME}/.shell-skeleton.sh"
+if [ "${CONFIGURATION}" = '' ]; then
+    CONFIGURATION="${HOME}/.shell-skeleton.sh"
 fi
 
-if [ ! -f "${CONFIG}" ]; then
-    echo "Config missing: ${CONFIG}"
+if [ ! -f "${CONFIGURATION}" ]; then
+    echo "Config missing: ${CONFIGURATION}"
 
     exit 1
 fi
 
 # shellcheck source=/dev/null
-. "${CONFIG}"
+. "${CONFIGURATION}"
 
 if [ "${TOKEN}" = '' ]; then
     echo "TOKEN not set."
