@@ -1,5 +1,14 @@
 # ShellSkeleton
 
+## Setup
+
+Install project dependencies.
+
+```sh
+script/setup.sh
+```
+
+
 ## Usage
 
 This section explains how to use the project.
@@ -31,6 +40,12 @@ Create the development virtual machine on Windows.
 
 ```bat
 script\vagrant\create.bat
+```
+
+Run tests.
+
+```sh
+script/test.sh [--help]
 ```
 
 Run style check.
