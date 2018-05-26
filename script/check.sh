@@ -44,7 +44,7 @@ else
 fi
 
 # shellcheck disable=SC2016
-EMPTY_FILES=$(${FIND} . -empty -regextype posix-extended ! -regex "${FILTER}")
+EMPTY_FILES=$(${FIND} . -type f -empty -regextype posix-extended ! -regex "${FILTER}")
 
 if [ ! "${EMPTY_FILES}" = '' ]; then
     CONCERN_FOUND=true
