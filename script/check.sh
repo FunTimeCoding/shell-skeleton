@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/skeleton/skeleton.sh"
+
 if [ "${1}" = --help ]; then
     echo "Usage: ${0} [--ci-mode]"
 
@@ -22,8 +27,6 @@ if [ "${SYSTEM}" = Darwin ]; then
 else
     FIND='find'
 fi
-
-EXCLUDE_FILTER='^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$'
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     FILES=$(${FIND} . -regextype posix-extended -name '*.sh' ! -regex "${EXCLUDE_FILTER}" -printf '%P\n')
