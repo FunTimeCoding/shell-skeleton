@@ -23,10 +23,10 @@ else
     FIND='find'
 fi
 
-FILTER='^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$'
+EXCLUDE_FILTER='^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$'
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    FILES=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -printf '%P\n')
+    FILES=$(${FIND} . -regextype posix-extended -name '*.sh' ! -regex "${EXCLUDE_FILTER}" -printf '%P\n')
 
     for FILE in ${FILES}; do
         FILE_REPLACED=$(echo "${FILE}" | sed 's/\//-/g')
@@ -34,7 +34,7 @@ if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     done
 else
     # shellcheck disable=SC2016
-    SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+    SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${EXCLUDE_FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
 
     if [ ! "${SHELL_SCRIPT_CONCERNS}" = '' ]; then
         CONCERN_FOUND=true
@@ -44,7 +44,7 @@ else
 fi
 
 # shellcheck disable=SC2016
-EMPTY_FILES=$(${FIND} . -type f -empty -regextype posix-extended ! -regex "${FILTER}")
+EMPTY_FILES=$(${FIND} . -regextype posix-extended -type f -empty ! -regex "${EXCLUDE_FILTER}")
 
 if [ ! "${EMPTY_FILES}" = '' ]; then
     CONCERN_FOUND=true
@@ -60,7 +60,7 @@ if [ ! "${EMPTY_FILES}" = '' ]; then
 fi
 
 # shellcheck disable=SC2016
-TO_DOS=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
+TO_DOS=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${TO_DOS}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
@@ -74,7 +74,7 @@ if [ ! "${TO_DOS}" = '' ]; then
 fi
 
 # shellcheck disable=SC2016
-SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
+SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${SHELLCHECK_IGNORES}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
