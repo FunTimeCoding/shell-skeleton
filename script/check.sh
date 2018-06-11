@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/skeleton/skeleton.sh"
+. "${SCRIPT_DIRECTORY}/../lib/common.sh"
 
 if [ "${1}" = --help ]; then
     echo "Usage: ${0} [--ci-mode]"

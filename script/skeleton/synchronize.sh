@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/skeleton.sh"
+. "${SCRIPT_DIRECTORY}/../../lib/common.sh"
 TARGET="${1}"
 
 if [ "${TARGET}" = '' ]; then
@@ -41,6 +41,8 @@ mkdir -p "${TARGET}/documentation"
 cp -R documentation/* "${TARGET}/documentation"
 mkdir -p "${TARGET}/script"
 cp -R script/* "${TARGET}/script"
+mkdir -p "${TARGET}/lib"
+cp lib/common.sh "${TARGET}/lib"
 cp .gitignore "${TARGET}"
 cp Vagrantfile "${TARGET}"
 cd "${TARGET}" || exit 1
