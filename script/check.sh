@@ -29,7 +29,7 @@ else
 fi
 
 MARKDOWN_FILES=$(${FIND} . -name '*.md')
-BLACKLIST=""
+BLACKLIST=''
 DICTIONARY=en_US
 mkdir -p tmp
 cat documentation/dictionary/*.dic > tmp/combined.dic
@@ -37,7 +37,7 @@ cat documentation/dictionary/*.dic > tmp/combined.dic
 for FILE in ${MARKDOWN_FILES}; do
     WORDS=$(hunspell -d "${DICTIONARY}" -p tmp/combined.dic -l "${FILE}" | sort | uniq)
 
-    if [ ! "${WORDS}" = "" ]; then
+    if [ ! "${WORDS}" = '' ]; then
         echo "${FILE}"
 
         for WORD in ${WORDS}; do
@@ -64,7 +64,7 @@ TEX_FILES=$(${FIND} . -name '*.tex')
 for FILE in ${TEX_FILES}; do
     WORDS=$(hunspell -d "${DICTIONARY}" -p tmp/combined.dic -l -t "${FILE}")
 
-    if [ ! "${WORDS}" = "" ]; then
+    if [ ! "${WORDS}" = '' ]; then
         echo "${FILE}"
 
         for WORD in ${WORDS}; do

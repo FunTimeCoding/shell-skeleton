@@ -3,7 +3,7 @@
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Linux ]; then
-    if [ "$(command -v lsb_release || true)" = "" ]; then
+    if [ "$(command -v lsb_release || true)" = '' ]; then
         if [ -f /etc/debian_version ]; then
             VERSION=$(cut -c 1-1 < /etc/debian_version)
         fi
@@ -24,7 +24,7 @@ if [ "${SYSTEM}" = Linux ]; then
     fi
 fi
 
-if [ "$(command -v vboxmanage || true)" = "" ]; then
+if [ "$(command -v vboxmanage || true)" = '' ]; then
     if [ "${SYSTEM}" = Darwin ]; then
         brew cask install virtualbox
     else
@@ -40,7 +40,7 @@ if [ "$(command -v vboxmanage || true)" = "" ]; then
     fi
 fi
 
-if [ "$(command -v vagrant || true)" = "" ]; then
+if [ "$(command -v vagrant || true)" = '' ]; then
     if [ "${SYSTEM}" = Darwin ]; then
         brew cask install vagrant
     else

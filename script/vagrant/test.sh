@@ -51,7 +51,7 @@ fi
 echo "Test from inside if the SSH daemon is listening for network connections."
 NETSTAT=$(vagrant ssh --command 'sudo netstat -pant | grep sshd' 2>/dev/null | tr -d '\r')
 
-if [ "${NETSTAT}" = "" ]; then
+if [ "${NETSTAT}" = '' ]; then
     A_TEST_FAILED=true
     echo Fail
 fi
