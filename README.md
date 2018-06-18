@@ -2,6 +2,8 @@
 
 ## Setup
 
+This section explains how to install and uninstall the project.
+
 Install project dependencies.
 
 ```sh

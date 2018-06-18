@@ -28,6 +28,70 @@ else
     FIND='find'
 fi
 
+MARKDOWN_FILES=$(${FIND} . -name '*.md')
+BLACKLIST=""
+DICTIONARY=en_US
+mkdir -p tmp
+cat documentation/dictionary/*.dic > tmp/combined.dic
+
+for FILE in ${MARKDOWN_FILES}; do
+    WORDS=$(hunspell -d "${DICTIONARY}" -p tmp/combined.dic -l "${FILE}" | sort | uniq)
+
+    if [ ! "${WORDS}" = "" ]; then
+        echo "${FILE}"
+
+        for WORD in ${WORDS}; do
+            BLACKLISTED=$(echo "${BLACKLIST}" | grep "${WORD}") || BLACKLISTED=false
+
+            if [ "${BLACKLISTED}" = false ]; then
+                if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+                    grep --line-number "${WORD}" "${FILE}"
+                else
+                    # The equals character is required.
+                    grep --line-number --color=always "${WORD}" "${FILE}"
+                fi
+            else
+                echo "Blacklisted word: ${WORD}"
+            fi
+        done
+
+        echo
+    fi
+done
+
+TEX_FILES=$(${FIND} . -name '*.tex')
+
+for FILE in ${TEX_FILES}; do
+    WORDS=$(hunspell -d "${DICTIONARY}" -p tmp/combined.dic -l -t "${FILE}")
+
+    if [ ! "${WORDS}" = "" ]; then
+        echo "${FILE}"
+
+        for WORD in ${WORDS}; do
+            STARTS_WITH_DASH=$(echo "${WORD}" | grep -q '^-') || STARTS_WITH_DASH=false
+
+            if [ "${STARTS_WITH_DASH}" = false ]; then
+                BLACKLISTED=$(echo "${BLACKLIST}" | grep "${WORD}") || BLACKLISTED=false
+
+                if [ "${BLACKLISTED}" = false ]; then
+                    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+                        grep --line-number "${WORD}" "${FILE}"
+                    else
+                        # The equals character is required.
+                        grep --line-number --color=always "${WORD}" "${FILE}"
+                    fi
+                else
+                    echo "Skip blacklisted: ${WORD}"
+                fi
+            else
+                echo "Skip invalid: ${WORD}"
+            fi
+        done
+
+        echo
+    fi
+done
+
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     FILES=$(${FIND} . -regextype posix-extended -name '*.sh' ! -regex "${EXCLUDE_FILTER}" -printf '%P\n')
 
