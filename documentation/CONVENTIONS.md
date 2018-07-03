@@ -44,7 +44,7 @@ Do not separate words.
 Upper Case Separated => UppserCaseSeparated
 lower case separated => LowerCaseSeparated
 Generic Lib => GenericLibrary
-XML Library => ExtensibleMarkubLanguageLibrary
+XML Library => ExtensibleMarkupLanguageLibrary
 ```
 
 
