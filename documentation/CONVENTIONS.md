@@ -41,7 +41,7 @@ Use long forms of abbreviations and acronyms.
 Do not separate words.
 
 ```
-Upper Case Separated => UppserCaseSeparated
+Upper Case Separated => UpperCaseSeparated
 lower case separated => LowerCaseSeparated
 Generic Lib => GenericLibrary
 XML Library => ExtensibleMarkupLanguageLibrary
