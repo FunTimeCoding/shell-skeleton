@@ -7,12 +7,13 @@ This document covers conventions.
 
 ### Directories
 
-Unified directories for shell-skeleton based projects.
+Directories for projects based on the skeleton for this language.
 
 * bin - Entry point scripts.
 * lib - Project code used by more than one entry point script.
 * documentation - Documentation files.
 * documentation/dictionary - Dictionary files.
+* script - Development scripts to build, check, manage job configuration and vagrant.
 * build - Files, executables and reports generated during build.
 * tmp - Temporary files.
 
