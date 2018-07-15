@@ -32,7 +32,12 @@ MARKDOWN_FILES=$(${FIND} . -regextype posix-extended -name '*.md' ! -regex "${EX
 BLACKLIST=''
 DICTIONARY=en_US
 mkdir -p tmp
-cat documentation/dictionary/*.dic > tmp/combined.dic
+
+if [ -d documentation/dictionary ]; then
+    cat documentation/dictionary/*.dic > tmp/combined.dic
+else
+    touch tmp/combined.dic
+fi
 
 for FILE in ${MARKDOWN_FILES}; do
     WORDS=$(hunspell -d "${DICTIONARY}" -p tmp/combined.dic -l "${FILE}" | sort | uniq)
