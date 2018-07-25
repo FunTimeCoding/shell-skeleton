@@ -1,4 +1,5 @@
 FROM debian
+#ARG environment
 MAINTAINER Alexander Reitzel
 RUN apt-get --quiet 2 update
 RUN apt-get --quiet 2 install lsb-release

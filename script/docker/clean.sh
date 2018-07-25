@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-# Remove container.
-docker rm shell-skeleton
+script/docker/remove.sh
 
 # Remove image.
 docker rmi funtimecoding/shell-skeleton

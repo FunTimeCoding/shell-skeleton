@@ -29,17 +29,14 @@ if [ "${CONFIGURATION}" = '' ]; then
     CONFIGURATION="${HOME}/.shell-skeleton.sh"
 fi
 
-if [ ! -f "${CONFIGURATION}" ]; then
-    echo "Config missing: ${CONFIGURATION}"
-
-    exit 1
+if [ -f "${CONFIGURATION}" ]; then
+    # shellcheck source=/dev/null
+    . "${CONFIGURATION}"
 fi
 
-# shellcheck source=/dev/null
-. "${CONFIGURATION}"
-
-if [ "${TOKEN}" = '' ]; then
-    echo "TOKEN not set."
-
-    exit 1
-fi
+# TODO: Require configuration values like this. If no configuration is needed, delete the entire block.
+#if [ "${TOKEN}" = '' ]; then
+#    echo "TOKEN not set."
+#
+#    exit 1
+#fi
