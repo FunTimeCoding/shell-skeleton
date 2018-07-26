@@ -19,6 +19,9 @@ if [ "${FOUND}" = false ]; then
 
     # TODO: Specifying the entry point overrides CMD in Dockerfile. Is this useful, or should all sub commands go through one entry point script? I'm inclined to say one entry point script per project.
     #docker run --name shell-skeleton --volume $(pwd):/shell-skeleton --entrypoint /shell-skeleton/bin/other.sh funtimecoding/shell-skeleton
+    #docker run --name shell-skeleton funtimecoding/shell-skeleton /shell-skeleton/bin/other.sh
+    # TODO: Run tests this way?
+    #docker run --name shell-skeleton funtimecoding/shell-skeleton /shell-skeleton/script/docker/test.sh
 else
     docker start --attach shell-skeleton
 fi
