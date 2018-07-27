@@ -45,6 +45,7 @@ mkdir -p "${TARGET}/lib"
 cp lib/common.sh "${TARGET}/lib"
 cp .gitignore "${TARGET}"
 cp Vagrantfile "${TARGET}"
+cp Dockerfile "${TARGET}"
 cd "${TARGET}" || exit 1
 echo "${NAME}" | grep --quiet 'Skeleton$' && IS_SKELETON=true || IS_SKELETON=false
 
