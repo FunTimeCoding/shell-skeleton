@@ -58,4 +58,4 @@ INITIALS=$(echo "${NAME}" | ${SED} 's/\([A-Z]\)[a-z]*/\1/g' | tr '[:upper:]' '[:
 UNDERSCORE=$(echo "${DASH}" | ${SED} --regexp-extended 's/-/_/g')
 # shellcheck disable=SC2016
 ${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c '${1} --in-place --expression "s/ShellSkeleton/${2}/g" --expression "s/shell-skeleton/${3}/g" --expression "s/shell_skeleton/${4}/g" "${5}"' '_' "${SED}" "${NAME}" "${DASH}" "${UNDERSCORE}" '{}' \;
-${SED} --in-place --expression "s/bin\/ss/bin\/${INITIALS}/g" --expression "s/'ss'/'${INITIALS}'/g" README.md Vagrantfile
+${SED} --in-place --expression "s/bin\/ss/bin\/${INITIALS}/g" --expression "s/'ss'/'${INITIALS}'/g" README.md Vagrantfile Dockerfile
