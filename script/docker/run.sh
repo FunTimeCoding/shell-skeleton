@@ -11,14 +11,16 @@ fi
 docker ps --all | grep --quiet shell-skeleton && FOUND=true || FOUND=false
 
 if [ "${FOUND}" = false ]; then
+    WORKING_DIRECTORY=$(pwd)
+
     if [ "${DEVELOPMENT}" = true ]; then
-        docker create --name shell-skeleton --volume $(pwd):/shell-skeleton funtimecoding/shell-skeleton
+        docker create --name shell-skeleton --volume "${WORKING_DIRECTORY}:/shell-skeleton" funtimecoding/shell-skeleton
     else
         docker create --name shell-skeleton funtimecoding/shell-skeleton
     fi
 
     # TODO: Specifying the entry point overrides CMD in Dockerfile. Is this useful, or should all sub commands go through one entry point script? I'm inclined to say one entry point script per project.
-    #docker create --name shell-skeleton --volume $(pwd):/shell-skeleton --entrypoint /shell-skeleton/bin/other.sh funtimecoding/shell-skeleton
+    #docker create --name shell-skeleton --volume "${WORKING_DIRECTORY}:/shell-skeleton" --entrypoint /shell-skeleton/bin/other.sh funtimecoding/shell-skeleton
     #docker create --name shell-skeleton funtimecoding/shell-skeleton /shell-skeleton/bin/other.sh
     # TODO: Run tests this way?
     #docker create --name shell-skeleton funtimecoding/shell-skeleton /shell-skeleton/script/docker/test.sh
