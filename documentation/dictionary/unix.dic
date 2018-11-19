@@ -1,3 +1,4 @@
 OPTIND
 mkdir
 tmp
+uname

@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+NAME='shell-skeleton'
+export NAME
+
+PROJECT_VERSION='0.1.0'
+export PROJECT_VERSION
+
+PACKAGE_VERSION='1'
+export PACKAGE_VERSION
+
+EMAIL='funtimecoding@gmail.com'
+export EMAIL
+
+COMBINED_VERSION="${PROJECT_VERSION}-${PACKAGE_VERSION}"
+export COMBINED_VERSION
