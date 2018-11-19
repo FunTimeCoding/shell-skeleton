@@ -2,8 +2,6 @@
 
 export DEBIAN_FRONTEND=noninteractive
 CODENAME=$(lsb_release --codename --short)
-sed --in-place 's/deb.debian.org/ftp.de.debian.org' /etc/apt/sources.list
-apt-get --quiet 2 update
 
 if [ "${CODENAME}" = jessie ]; then
     echo Europe/Berlin > /etc/timezone
