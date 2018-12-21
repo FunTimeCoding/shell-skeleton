@@ -25,8 +25,8 @@ if [ "${FOUND}" = false ]; then
     fi
 
     # TODO: Specifying the entry point overrides CMD in Dockerfile. Is this useful, or should all sub commands go through one entry point script? I'm inclined to say one entry point script per project.
-    #docker create --name "${PROJECT_NAME}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME}" --entrypoint "/${PROJECT_NAME}/bin/other.sh" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}"
-    #docker create --name "${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}" "/${PROJECT_NAME}/bin/other.sh"
+    #docker create --name "${PROJECT_NAME}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME}" --entrypoint "/${PROJECT_NAME}/bin/other" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}"
+    #docker create --name "${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}" "/${PROJECT_NAME}/bin/other"
     # TODO: Run tests this way?
     #docker create --name "${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}" "/${PROJECT_NAME}/script/docker/test.sh"
 fi
