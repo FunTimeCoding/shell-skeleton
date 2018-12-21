@@ -1,5 +1,5 @@
 ---
 - template:
-    src: README.md
-    dest: /root/README.md
+    src: ansible-example.md
+    dest: /root/ansible-example.md
   become: true
