@@ -5,11 +5,11 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../lib/project.sh"
 
-ARCHIVE="${NAME}_${PROJECT_VERSION}.orig.tar.gz"
-PROJECT_ROOT="${NAME}-${PROJECT_VERSION}"
+ARCHIVE="${PROJECT_NAME}_${PROJECT_VERSION}.orig.tar.gz"
+PROJECT_ROOT="${PROJECT_NAME}-${PROJECT_VERSION}"
 
 if [ ! -f debian/changelog ]; then
-    dch --create -v "${COMBINED_VERSION}" --package "${NAME}"
+    dch --create -v "${COMBINED_VERSION}" --package "${PROJECT_NAME}"
 fi
 
 mkdir -p build
