@@ -46,21 +46,16 @@ Vagrant.configure('2') do |c|
   end
 
   c.vm.provision :shell, path: 'script/vagrant/update-system.sh'
-
-  # Shell provisioning
   c.vm.provision :shell, path: 'script/vagrant/provision.sh'
 
-  # Ansible provisioning
   config.vm.provision :ansible do |a|
     a.playbook = 'playbook.yml'
     a.compatibility_mode = '2.0'
   end
 
-  # Salt provisioning
   c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type
 
   c.vm.provision :shell do |s|
-    # Install Debian Salt package.
     s.path = 'script/vagrant/salt.sh'
     s.args = [hostname + '.' + domain, '/vagrant/tmp/salt/minion.conf']
 
@@ -73,5 +68,3 @@ Vagrant.configure('2') do |c|
 
   c.vm.provision :shell, inline: 'salt-call state.highstate'
 end
-
-# vim: ft=ruby
