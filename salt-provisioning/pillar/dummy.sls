@@ -1,1 +1,1 @@
-greeting: Hello friend.
+greeting: Hello Salt.
