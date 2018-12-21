@@ -33,10 +33,3 @@ if [ -f "${CONFIGURATION}" ]; then
     # shellcheck source=/dev/null
     . "${CONFIGURATION}"
 fi
-
-# TODO: Require configuration values like this. If no configuration is needed, delete the entire block.
-#if [ "${TOKEN}" = '' ]; then
-#    echo "TOKEN not set."
-#
-#    exit 1
-#fi
