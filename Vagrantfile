@@ -48,7 +48,7 @@ Vagrant.configure('2') do |c|
   c.vm.provision :shell, path: 'script/vagrant/update-system.sh'
   c.vm.provision :shell, path: 'script/vagrant/provision.sh'
 
-  config.vm.provision :ansible do |a|
+  c.vm.provision :ansible do |a|
     a.playbook = 'playbook.yml'
     a.compatibility_mode = '2.0'
   end
