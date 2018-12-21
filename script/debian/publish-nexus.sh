@@ -6,5 +6,5 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 . "${SCRIPT_DIRECTORY}/../../lib/project.sh"
 
 # shellcheck source=/dev/null
-. "${HOME}/.debian_tools.sh"
+. "${HOME}/.debian-tools.sh"
 curl -u "${PACKAGE_REPOSITORY_USERNAME}:${PACKAGE_REPOSITORY_PASSWORD}" -X POST -H "Content-Type: multipart/form-data" --data-binary "@build/${NAME}_${COMBINED_VERSION}_amd64.deb" "https://${PACKAGE_REPOSITORY_SERVER}/repository/debian/"
