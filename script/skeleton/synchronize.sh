@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../../lib/common.sh"
+. "${SCRIPT_DIRECTORY}/../../lib/project.sh"
 TARGET="${1}"
 
 if [ "${TARGET}" = '' ]; then
@@ -41,8 +41,10 @@ mkdir -p "${TARGET}/documentation"
 cp -R documentation/* "${TARGET}/documentation"
 mkdir -p "${TARGET}/script"
 cp -R script/* "${TARGET}/script"
+mkdir -p "${TARGET}/debian"
+cp -R script/* "${TARGET}/debian"
 mkdir -p "${TARGET}/lib"
-cp lib/common.sh "${TARGET}/lib"
+cp lib/project.sh "${TARGET}/lib"
 cp .gitignore "${TARGET}"
 cp Vagrantfile "${TARGET}"
 cp Dockerfile "${TARGET}"
@@ -58,4 +60,5 @@ INITIALS=$(echo "${NAME}" | ${SED} 's/\([A-Z]\)[a-z]*/\1/g' | tr '[:upper:]' '[:
 UNDERSCORE=$(echo "${DASH}" | ${SED} --regexp-extended 's/-/_/g')
 # shellcheck disable=SC2016
 ${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c '${1} --in-place --expression "s/ShellSkeleton/${2}/g" --expression "s/shell-skeleton/${3}/g" --expression "s/shell_skeleton/${4}/g" "${5}"' '_' "${SED}" "${NAME}" "${DASH}" "${UNDERSCORE}" '{}' \;
+# shellcheck disable=SC1117
 ${SED} --in-place --expression "s/bin\/ss/bin\/${INITIALS}/g" --expression "s/'ss'/'${INITIALS}'/g" README.md Vagrantfile Dockerfile

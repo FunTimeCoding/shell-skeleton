@@ -1,1 +1,4 @@
 Debian
+debhelper
+shlibs
+dpkg
