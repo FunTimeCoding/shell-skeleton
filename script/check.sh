@@ -145,6 +145,21 @@ if [ ! "${TO_DOS}" = '' ]; then
     fi
 fi
 
+DUPLICATE_WORDS=$(cat documentation/dictionary/** | sort | uniq -cd)
+
+if [ ! "${DUPLICATE_WORDS}" = '' ]; then
+    CONCERN_FOUND=true
+
+    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+        echo "${DUPLICATE_WORDS}" > build/log/duplicate-words.txt
+    else
+        echo
+        echo "(WARNING) Duplicate words:"
+        echo
+        echo "${DUPLICATE_WORDS}"
+    fi
+fi
+
 # shellcheck disable=SC2016
 SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
