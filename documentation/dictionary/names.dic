@@ -6,3 +6,6 @@ shellcheck
 netcat
 Gmail
 Ansible
+devops
+AnsibleVagrantRootUser
+AnsibleVagrantUser
