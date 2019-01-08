@@ -56,3 +56,15 @@ Build project.
 ```sh
 script/build.sh
 ```
+
+Install Debian package.
+
+```sh
+sudo dpkg --install build/shell-skeleton_0.1.0-1_all.deb
+```
+
+Show files the package installed.
+
+```sh
+dpkg-query --listfiles shell-skeleton
+```
