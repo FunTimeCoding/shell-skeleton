@@ -39,12 +39,12 @@ if [ "${1}" = --ci-mode ]; then
 
     mkdir -p build/log
 
-    if [ -f "${HOME}/.sonar-qube-tools.sh" ]; do
+    if [ -f "${HOME}/.sonar-qube-tools.sh" ]; then
         . "${HOME}/.sonar-qube-tools.sh"
         sonar-scanner "-Dsonar.projectKey=${PROJECT_NAME}" -Dsonar.sources=. "-Dsonar.host.url=${SONAR_SERVER}" "-Dsonar.login=${SONAR_LOGIN}" | "${TEE}" build/log/sonar-runner.log
     else
         echo "SonarQube configuration missing."
 
         exit 1
-    done
+    fi
 fi
