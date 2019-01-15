@@ -6,3 +6,4 @@ debian/debhelper-build-stamp
 debian/shell-skeleton
 debian/shell-skeleton.substvars
 documentation/man/*.1
+.scannerwork

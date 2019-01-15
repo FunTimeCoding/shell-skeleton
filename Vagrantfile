@@ -51,6 +51,12 @@ Vagrant.configure('2') do |c|
   c.vm.provision :ansible do |a|
     a.playbook = 'playbook.yml'
     a.compatibility_mode = '2.0'
+    # Allow remote_user: root.
+    a.force_remote_user = false
+    # Uncomment for more verbosity.
+    #a.verbose = true
+    #a.verbose = 'vv'
+    #a.verbose = 'vvv'
   end
 
   c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type
