@@ -3,7 +3,6 @@
 rm -rf build
 script/check.sh --ci-mode
 script/measure.sh --ci-mode
-
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Linux ]; then
