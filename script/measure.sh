@@ -65,6 +65,14 @@ if [ "${1}" = --ci-mode ]; then
         echo "Warning: SQALE_INDEX exceeded"
     fi
 
+    DUPLICATED_BLOCKS=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=duplicated_blocks" | jq --raw-output '.baseComponent.measures[].value')
+    echo "DUPLICATED_BLOCKS: ${DUPLICATED_BLOCKS}"
+
+    if [ ! "${DUPLICATED_BLOCKS}" = 0 ]; then
+        CONCERN_FOUND=true
+        echo "Warning: DUPLICATED_BLOCKS exceeded"
+    fi
+
     DUPLICATED_LINES_DENSITY=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=duplicated_lines_density" | jq --raw-output '.baseComponent.measures[].value')
     echo "DUPLICATED_LINES_DENSITY: ${DUPLICATED_LINES_DENSITY}"
 
