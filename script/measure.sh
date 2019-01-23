@@ -49,9 +49,17 @@ if [ "${1}" = --ci-mode ]; then
     if [ -f "${HOME}/.sonar-qube-tools.sh" ]; then
         # shellcheck source=/dev/null
         . "${HOME}/.sonar-qube-tools.sh"
-        sonar-scanner "-Dsonar.projectKey=${PROJECT_NAME}" -Dsonar.sources=. "-Dsonar.host.url=${SONAR_SERVER}" "-Dsonar.login=${SONAR_LOGIN}" '-Dsonar.exclusions=build/**,tmp/**' | "${TEE}" build/log/sonar-runner.log
+        sonar-scanner "-Dsonar.projectKey=${PROJECT_NAME}" -Dsonar.sources=. "-Dsonar.host.url=${SONAR_SERVER}" "-Dsonar.login=${SONAR_TOKEN}" '-Dsonar.exclusions=build/**,tmp/**' | "${TEE}" build/log/sonar-runner.log
     else
         echo "SonarQube configuration missing."
+
+        exit 1
+    fi
+
+    SQALE_INDEX=$(curl --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=sqale_index" | jq --raw-output '.baseComponent.measures[].value')
+
+    if [ ! "${SQALE_INDEX}" = 0 ]; then
+        echo "SQALE index: ${SQALE_INDEX}"
 
         exit 1
     fi
