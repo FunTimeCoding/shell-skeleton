@@ -28,5 +28,5 @@ export VENDOR_NAME_LOWER
 # .venv is for python-skeleton.
 # node_modules is for java-script-skeleton
 # target is for java-skeleton
-EXCLUDE_FILTER='^.*\/(build|tmp|vendor|node_modules|target|\.venv|\.git|\.vagrant|\.idea|\.tox|\.cache|__pycache__|[a-z_]+\.egg-info)\/.*$'
+EXCLUDE_FILTER='^.*\/(build|tmp|vendor|node_modules|target|\.venv|\.git|\.vagrant|\.idea|\.scannerwork|\.tox|\.cache|__pycache__|[a-z_]+\.egg-info)\/.*$'
 export EXCLUDE_FILTER
