@@ -56,11 +56,27 @@ if [ "${1}" = --ci-mode ]; then
         exit 1
     fi
 
-    SQALE_INDEX=$(curl --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=sqale_index" | jq --raw-output '.baseComponent.measures[].value')
+    CONCERN_FOUND=false
+    SQALE_INDEX=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=sqale_index" | jq --raw-output '.baseComponent.measures[].value')
+    echo "SQALE_INDEX: ${SQALE_INDEX}"
 
     if [ ! "${SQALE_INDEX}" = 0 ]; then
-        echo "SQALE index: ${SQALE_INDEX}"
+        CONCERN_FOUND=true
+        echo "Warning: SQALE_INDEX exceeded"
+    fi
 
-        exit 1
+    DUPLICATED_LINES_DENSITY=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=duplicated_lines_density" | jq --raw-output '.baseComponent.measures[].value')
+    echo "DUPLICATED_LINES_DENSITY: ${DUPLICATED_LINES_DENSITY}"
+
+    if [ ! "${DUPLICATED_LINES_DENSITY}" = 0.0 ]; then
+        CONCERN_FOUND=true
+        echo "Warning: DUPLICATED_LINES_DENSITY exceeded"
+    fi
+
+    if [ "${CONCERN_FOUND}" = true ]; then
+        echo
+        echo "Concern(s) of category WARNING found." >&2
+
+        exit 2
     fi
 fi
