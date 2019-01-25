@@ -49,7 +49,7 @@ Vagrant.configure('2') do |c|
   c.vm.provision :shell, path: 'script/vagrant/provision.sh'
 
   c.vm.provision :ansible do |a|
-    a.playbook = 'playbook.yml'
+    a.playbook = 'playbook.yaml'
     a.compatibility_mode = '2.0'
     # Allow remote_user: root.
     a.force_remote_user = false
