@@ -1,0 +1,4 @@
+---
+- template:
+    src: example.txt
+    dest: /tmp/example.txt

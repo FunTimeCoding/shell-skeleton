@@ -1,4 +1,3 @@
 - hosts: all
   roles:
-  - vagrant-root-user
-  - vagrant-user
+  - example
