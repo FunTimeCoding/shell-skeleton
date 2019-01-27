@@ -25,9 +25,11 @@ SYSTEM=$(uname)
 if [ "${SYSTEM}" = Darwin ]; then
     FIND='gfind'
     UNIQ='guniq'
+    SED='gsed'
 else
     FIND='find'
     UNIQ='uniq'
+    SED='sed'
 fi
 
 MARKDOWN_FILES=$(${FIND} . -regextype posix-extended -name '*.md' ! -regex "${EXCLUDE_FILTER}" -printf '%P\n')
@@ -147,7 +149,7 @@ if [ ! "${TO_DOS}" = '' ]; then
     fi
 fi
 
-DUPLICATE_WORDS=$(cat documentation/dictionary/** | sort | ${UNIQ} -cd)
+DUPLICATE_WORDS=$(cat documentation/dictionary/** | ${SED} '/^$/d' | sort | ${UNIQ} -cd)
 
 if [ ! "${DUPLICATE_WORDS}" = '' ]; then
     CONCERN_FOUND=true
@@ -157,7 +159,6 @@ if [ ! "${DUPLICATE_WORDS}" = '' ]; then
     else
         echo
         echo "(WARNING) Duplicate words:"
-        echo
         echo "${DUPLICATE_WORDS}"
     fi
 fi

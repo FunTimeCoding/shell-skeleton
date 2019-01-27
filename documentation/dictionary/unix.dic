@@ -2,3 +2,4 @@ OPTIND
 mkdir
 tmp
 uname
+sudo
