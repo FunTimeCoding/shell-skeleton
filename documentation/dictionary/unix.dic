@@ -3,3 +3,4 @@ mkdir
 tmp
 uname
 sudo
+uniq
