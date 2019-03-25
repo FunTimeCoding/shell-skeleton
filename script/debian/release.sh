@@ -7,7 +7,7 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 MESSAGE="${1}"
 
-if [ "${MESSAGE}" = "" ]; then
+if [ "${MESSAGE}" = '' ]; then
     echo "Usage: ${0} MESSAGE"
 
     exit 1
