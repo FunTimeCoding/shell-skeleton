@@ -43,7 +43,7 @@ Vagrant.configure('2') do |c|
   c.vm.provider :virtualbox do |v|
     v.name = 'shell-skeleton'
     v.cpus = 2
-    v.memory = 1024
+    v.memory = 2048
   end
 
   c.vm.provision :shell, path: 'script/vagrant/update-system.sh'
