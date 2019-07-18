@@ -60,19 +60,19 @@ Vagrant.configure('2') do |c|
     #a.verbose = 'vvv'
   end
 
-  #c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type
+  c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type
 
-  #c.vm.provision :shell do |s|
-  #  s.path = 'script/vagrant/salt.sh'
-  #  s.args = [hostname + '.' + domain, '/vagrant/tmp/salt/minion.conf']
+  c.vm.provision :shell do |s|
+   s.path = 'script/vagrant/salt.sh'
+   s.args = [hostname + '.' + domain, '/vagrant/tmp/salt/minion.conf']
 
-  #  # Install upstream Salt package.
-  #  #s.path = 'tmp/bootstrap-salt.sh'
-  #  # Jessie versions: https://repo.saltstack.com/apt/debian/8/amd64
-  #  # Stretch versions: https://repo.saltstack.com/apt/debian/9/amd64
-  #  # Buster versions: https://repo.saltstack.com/apt/debian/10/amd64
-  #  #s.args = ['-U', '-i', hostname + '.' + domain, '-c', '/vagrant/tmp/salt', 'stable', '2018.3.3']
-  #end
+   # Install upstream Salt package.
+   #s.path = 'tmp/bootstrap-salt.sh'
+   # Jessie versions: https://repo.saltstack.com/apt/debian/8/amd64
+   # Stretch versions: https://repo.saltstack.com/apt/debian/9/amd64
+   # Buster versions: https://repo.saltstack.com/apt/debian/10/amd64
+   #s.args = ['-U', '-i', hostname + '.' + domain, '-c', '/vagrant/tmp/salt', 'stable', '2018.3.3']
+  end
 
-  #c.vm.provision :shell, inline: 'salt-call state.highstate'
+  c.vm.provision :shell, inline: 'salt-call state.highstate'
 end
