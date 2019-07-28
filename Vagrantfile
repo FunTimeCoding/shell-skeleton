@@ -1,6 +1,6 @@
 Vagrant.configure('2') do |c|
-  #c.vm.box = 'debian/stretch64'
-  c.vm.box = 'debian/buster64'
+  c.vm.box = 'debian/stretch64'
+  #c.vm.box = 'debian/buster64'
   Dir.mkdir('tmp') unless File.exist?('tmp')
 
   if File.exist?('tmp/ethernet-device.txt')
