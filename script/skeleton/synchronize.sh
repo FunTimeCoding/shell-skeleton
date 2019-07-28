@@ -51,6 +51,7 @@ cp .gitignore "${TARGET}"
 cp playbook.yaml "${TARGET}"
 cp Vagrantfile "${TARGET}"
 cp Dockerfile "${TARGET}"
+cp Jenkinsfile "${TARGET}"
 cd "${TARGET}" || exit 1
 echo "${NAME}" | grep --quiet 'Skeleton$' && IS_SKELETON=true || IS_SKELETON=false
 
