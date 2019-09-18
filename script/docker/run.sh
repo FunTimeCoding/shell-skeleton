@@ -13,22 +13,22 @@ else
     DEVELOPMENT=false
 fi
 
-docker ps --all | grep --quiet "${PROJECT_NAME}" && FOUND=true || FOUND=false
+docker ps --all | grep --quiet "${PROJECT_NAME_DASH}" && FOUND=true || FOUND=false
 
 if [ "${FOUND}" = false ]; then
     WORKING_DIRECTORY=$(pwd)
 
     if [ "${DEVELOPMENT}" = true ]; then
-        docker create --name "${PROJECT_NAME}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}"
+        docker create --name "${PROJECT_NAME_DASH}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME_DASH}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}"
     else
-        docker create --name "${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}"
+        docker create --name "${PROJECT_NAME_DASH}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}"
     fi
 
     # TODO: Specifying the entry point overrides CMD in Dockerfile. Is this useful, or should all sub commands go through one entry point script? I'm inclined to say one entry point script per project.
-    #docker create --name "${PROJECT_NAME}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME}" --entrypoint "/${PROJECT_NAME}/bin/other" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}"
-    #docker create --name "${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}" "/${PROJECT_NAME}/bin/other"
+    #docker create --name "${PROJECT_NAME_DASH}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME_DASH}" --entrypoint "/${PROJECT_NAME_DASH}/bin/other" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}"
+    #docker create --name "${PROJECT_NAME_DASH}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}" "/${PROJECT_NAME_DASH}/bin/other"
     # TODO: Run tests this way?
-    #docker create --name "${PROJECT_NAME}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME}" "/${PROJECT_NAME}/script/docker/test.sh"
+    #docker create --name "${PROJECT_NAME_DASH}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}" "/${PROJECT_NAME_DASH}/script/docker/test.sh"
 fi
 
-docker start --attach "${PROJECT_NAME}"
+docker start --attach "${PROJECT_NAME_DASH}"

@@ -49,7 +49,7 @@ if [ "${1}" = --ci-mode ]; then
     if [ -f "${HOME}/.sonar-qube-tools.sh" ]; then
         # shellcheck source=/dev/null
         . "${HOME}/.sonar-qube-tools.sh"
-        sonar-scanner "-Dsonar.projectKey=${PROJECT_NAME}" -Dsonar.sources=. "-Dsonar.host.url=${SONAR_SERVER}" "-Dsonar.login=${SONAR_TOKEN}" '-Dsonar.exclusions=build/**,tmp/**' | "${TEE}" build/log/sonar-runner.log
+        sonar-scanner "-Dsonar.projectKey=${PROJECT_NAME_DASH}" -Dsonar.sources=. "-Dsonar.host.url=${SONAR_SERVER}" "-Dsonar.login=${SONAR_TOKEN}" '-Dsonar.exclusions=build/**,tmp/**' | "${TEE}" build/log/sonar-runner.log
     else
         echo "SonarQube configuration missing."
 
@@ -57,7 +57,7 @@ if [ "${1}" = --ci-mode ]; then
     fi
 
     CONCERN_FOUND=false
-    SQALE_INDEX=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=sqale_index" | jq --raw-output '.baseComponent.measures[].value')
+    SQALE_INDEX=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME_DASH}&metricKeys=sqale_index" | jq --raw-output '.baseComponent.measures[].value')
     echo "SQALE_INDEX: ${SQALE_INDEX}"
 
     if [ ! "${SQALE_INDEX}" = 0 ]; then
@@ -65,7 +65,7 @@ if [ "${1}" = --ci-mode ]; then
         echo "Warning: SQALE_INDEX exceeded"
     fi
 
-    DUPLICATED_BLOCKS=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=duplicated_blocks" | jq --raw-output '.baseComponent.measures[].value')
+    DUPLICATED_BLOCKS=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME_DASH}&metricKeys=duplicated_blocks" | jq --raw-output '.baseComponent.measures[].value')
     echo "DUPLICATED_BLOCKS: ${DUPLICATED_BLOCKS}"
 
     if [ ! "${DUPLICATED_BLOCKS}" = 0 ]; then
@@ -73,7 +73,7 @@ if [ "${1}" = --ci-mode ]; then
         echo "Warning: DUPLICATED_BLOCKS exceeded"
     fi
 
-    DUPLICATED_LINES_DENSITY=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME}&metricKeys=duplicated_lines_density" | jq --raw-output '.baseComponent.measures[].value')
+    DUPLICATED_LINES_DENSITY=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component_tree?component=${PROJECT_NAME_DASH}&metricKeys=duplicated_lines_density" | jq --raw-output '.baseComponent.measures[].value')
     echo "DUPLICATED_LINES_DENSITY: ${DUPLICATED_LINES_DENSITY}"
 
     if [ ! "${DUPLICATED_LINES_DENSITY}" = 0.0 ]; then

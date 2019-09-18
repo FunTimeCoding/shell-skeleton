@@ -18,15 +18,15 @@ Vagrant.configure('2') do |c|
   if File.exist?('tmp/hostname.txt')
     hostname = File.read('tmp/hostname.txt').chomp
   else
-    hostname = 'ss'
-    File.write('tmp/hostname.txt', hostname + "\n")
+    hostname = `. lib/project.sh && echo "${PROJECT_NAME_INITIALS}"`
+    File.write('tmp/hostname.txt', hostname)
   end
 
   if File.exist?('tmp/domain.txt')
     domain = File.read('tmp/domain.txt').chomp
   else
-    domain = 'example.org'
-    File.write('tmp/domain.txt', domain + "\n")
+    domain = `hostname -f`
+    File.write('tmp/domain.txt', domain)
   end
 
   c.vm.network :public_network, bridge: bridge
