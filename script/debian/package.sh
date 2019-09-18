@@ -6,11 +6,11 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 . "${SCRIPT_DIRECTORY}/../../lib/project.sh"
 
 script/debian/generate-manual.sh
-ARCHIVE="${PROJECT_NAME}_${PROJECT_VERSION}.orig.tar.gz"
-PROJECT_ROOT="${PROJECT_NAME}-${PROJECT_VERSION}"
+ARCHIVE="${PROJECT_NAME_DASH}_${PROJECT_VERSION}.orig.tar.gz"
+PROJECT_ROOT="${PROJECT_NAME_DASH}-${PROJECT_VERSION}"
 
 if [ ! -f debian/changelog ]; then
-    dch --create -v "${COMBINED_VERSION}" --package "${PROJECT_NAME}"
+    dch --create -v "${COMBINED_VERSION}" --package "${PROJECT_NAME_DASH}"
 fi
 
 mkdir -p build

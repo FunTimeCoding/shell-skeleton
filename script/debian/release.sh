@@ -14,7 +14,7 @@ if [ "${MESSAGE}" = '' ]; then
 fi
 
 if [ ! -f debian/changelog ]; then
-    dch --create --newversion "${COMBINED_VERSION}" --package "${PROJECT_NAME}" "Initial release."
+    dch --create --newversion "${COMBINED_VERSION}" --package "${PROJECT_NAME_DASH}" "Initial release."
 fi
 
 dch --newversion "${COMBINED_VERSION}" "${MESSAGE}"
