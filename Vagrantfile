@@ -1,6 +1,7 @@
 Vagrant.configure('2') do |c|
   c.vm.box = 'debian/stretch64'
   #c.vm.box = 'debian/buster64'
+  c.ssh.forward_agent = true
   Dir.mkdir('tmp') unless File.exist?('tmp')
 
   if File.exist?('tmp/ethernet-device.txt')
@@ -53,6 +54,7 @@ Vagrant.configure('2') do |c|
   c.vm.provision :ansible do |a|
     a.playbook = 'playbook.yaml'
     a.compatibility_mode = '2.0'
+    a.extra_vars = {}
     # Allow remote_user: root.
     a.force_remote_user = false
     # Uncomment for more verbosity.
