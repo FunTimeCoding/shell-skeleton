@@ -21,6 +21,7 @@ Vagrant.configure('2') do |c|
   else
     hostname = `. lib/project.sh && echo "${PROJECT_NAME_INITIALS}"`
     File.write('tmp/hostname.txt', hostname)
+    hostname = hostname.chomp
   end
 
   if File.exist?('tmp/domain.txt')
@@ -28,6 +29,7 @@ Vagrant.configure('2') do |c|
   else
     domain = `hostname -f`
     File.write('tmp/domain.txt', domain)
+    domain = domain.chomp
   end
 
   c.vm.network :public_network, bridge: bridge
