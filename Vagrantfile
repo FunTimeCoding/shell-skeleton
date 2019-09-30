@@ -53,16 +53,18 @@ Vagrant.configure('2') do |c|
   c.vm.provision :shell, path: 'script/vagrant/update-system.sh'
   c.vm.provision :shell, path: 'script/vagrant/provision.sh'
 
-  c.vm.provision :ansible do |a|
-    a.playbook = 'playbook.yaml'
-    a.compatibility_mode = '2.0'
-    a.extra_vars = {}
-    # Allow remote_user: root.
-    a.force_remote_user = false
-    # Uncomment for more verbosity.
-    #a.verbose = true
-    #a.verbose = 'vv'
-    #a.verbose = 'vvv'
+  unless RbConfig::CONFIG['host_os'] =~ /mswin32|mingw32/
+    c.vm.provision :ansible do |a|
+      a.playbook = 'playbook.yaml'
+      a.compatibility_mode = '2.0'
+      a.extra_vars = {}
+      # Allow remote_user: root.
+      a.force_remote_user = false
+      # Uncomment for more verbosity.
+      #a.verbose = true
+      #a.verbose = 'vv'
+      #a.verbose = 'vvv'
+    end
   end
 
   c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type

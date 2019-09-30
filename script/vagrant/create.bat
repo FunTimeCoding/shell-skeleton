@@ -7,5 +7,6 @@ if not exist tmp\salt mkdir tmp\salt
 copy configuration\minion.yaml tmp\salt\minion.conf
 
 vagrant up
+vagrant ssh --command /vagrant/script/vagrant/ansible.sh
 vagrant ssh --command /vagrant/script/vagrant/vagrant.sh
 pause
