@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../../lib/project.sh"
+. "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
 rm -rf debian/debhelper-build-stamp
 rm -rf debian/files

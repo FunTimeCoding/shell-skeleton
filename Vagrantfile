@@ -20,7 +20,7 @@ Vagrant.configure('2') do |c|
     hostname = File.read('tmp/hostname.txt').chomp
   else
     # TODO: Make this work on Windows.
-    hostname = `. lib/project.sh && echo "${PROJECT_NAME_INITIALS}"`
+    hostname = `. configuration/project.sh && echo "${PROJECT_NAME_INITIALS}"`
     File.write('tmp/hostname.txt', hostname)
     hostname = hostname.chomp
   end
