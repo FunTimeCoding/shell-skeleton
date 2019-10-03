@@ -6,4 +6,5 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 . "${SCRIPT_DIRECTORY}/../../../configuration/project.sh"
 
 docker build --tag "${VENDOR_NAME_LOWER}/ansible-playbook" script/docker/ansible/playbook
-docker build --tag "${VENDOR_NAME_LOWER}/ansible-ssh" script/docker/ansible/ssh
+PUBLIC_KEY=$(cat "${HOME}/.ssh/id_rsa.pub")
+docker build --tag "${VENDOR_NAME_LOWER}/ansible-ssh" --build-arg SSH_PUBLIC_KEY="${PUBLIC_KEY}" script/docker/ansible/ssh
