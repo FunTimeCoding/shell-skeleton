@@ -13,11 +13,11 @@ usage()
 SUB_COMMAND=${1}
 
 if [ "${SUB_COMMAND}" = '' ]; then
-    # shellcheck disable=SC2086,SC2068
-    ${SCRIPT_DIRECTORY}/${SUB_COMMAND} $@
-else
     # shellcheck disable=SC2086
     for SCRIPT in "${SCRIPT_DIRECTORY}"/*; do
         echo "${SCRIPT}"
     done
+else
+    # shellcheck disable=SC2086,SC2068
+    ${SCRIPT_DIRECTORY}/${SUB_COMMAND} $@
 fi
