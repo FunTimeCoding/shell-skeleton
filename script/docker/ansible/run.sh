@@ -1,3 +1,4 @@
 #!/bin/sh -e
 
-docker run --rm -it -v "$(pwd)/roles:/roles" funtimecoding/ansible-playbook playbook.yml
+WORKING_DIRECTORY=$(pwd)
+docker run --interactive --tty --rm --volume "${WORKING_DIRECTORY}:/project-volume" funtimecoding/ansible-playbook playbook.yml
