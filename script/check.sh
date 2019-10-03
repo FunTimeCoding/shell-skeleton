@@ -164,16 +164,16 @@ if [ ! "${DUPLICATE_WORDS}" = '' ]; then
 fi
 
 # shellcheck disable=SC2016
-SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
+SHELLCHECK_DISABLES=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}" -exec sh -c 'grep -Hrn "# shellcheck disable" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
-if [ ! "${SHELLCHECK_IGNORES}" = '' ]; then
+if [ ! "${SHELLCHECK_DISABLES}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${SHELLCHECK_IGNORES}" > build/log/shellcheck-ignores.txt
+        echo "${SHELLCHECK_DISABLES}" > build/log/shellcheck-ignores.txt
     else
         echo
-        echo "(NOTICE) Shellcheck ignores:"
+        echo "(NOTICE) Shellcheck disables:"
         echo
-        echo "${SHELLCHECK_IGNORES}"
+        echo "${SHELLCHECK_DISABLES}"
     fi
 fi
 
