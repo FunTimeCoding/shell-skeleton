@@ -2,9 +2,7 @@
 
 ## Setup
 
-This section explains how to install and uninstall the project.
-
-Install project dependencies.
+Install project dependencies:
 
 ```sh
 script/setup.sh
@@ -13,57 +11,59 @@ script/setup.sh
 
 ## Usage
 
-This section explains how to use the project.
-
-Run the main program.
+Run the main program:
 
 ```sh
 bin/ss
 ```
 
+Run the main program inside the container:
+
+```sh
+docker run -it --rm funtimecoding/shell-skeleton
+```
+
 
 ## Development
 
-This section explains how to improve the project.
-
-Configure Git on Windows before cloning. This avoids problems with Vagrant and VirtualBox.
+Configure Git on Windows before cloning:
 
 ```sh
 git config --global core.autocrlf input
 ```
 
-Create the development virtual machine on Linux and Darwin.
+Create the development virtual machine on Linux and Darwin:
 
 ```sh
 script/vagrant/create.sh
 ```
 
-Create the development virtual machine on Windows.
+Create the development virtual machine on Windows:
 
 ```bat
 script\vagrant\create.bat
 ```
 
-Run style check and metrics.
+Run style check and metrics:
 
 ```sh
 script/check.sh [--help]
 script/measure.sh [--help]
 ```
 
-Build project.
+Build project:
 
 ```sh
 script/build.sh
 ```
 
-Install Debian package.
+Install Debian package:
 
 ```sh
 sudo dpkg --install build/shell-skeleton_0.1.0-1_all.deb
 ```
 
-Show files the package installed.
+Show files the package installed:
 
 ```sh
 dpkg-query --listfiles shell-skeleton
