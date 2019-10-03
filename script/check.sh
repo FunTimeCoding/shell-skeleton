@@ -33,7 +33,6 @@ else
 fi
 
 MARKDOWN_FILES=$(${FIND} . -regextype posix-extended -name '*.md' -regex "${INCLUDE_FILTER}" -printf '%P\n')
-BLACKLIST=''
 DICTIONARY=en_US
 mkdir -p tmp
 
@@ -50,17 +49,11 @@ for FILE in ${MARKDOWN_FILES}; do
         echo "${FILE}"
 
         for WORD in ${WORDS}; do
-            BLACKLISTED=$(echo "${BLACKLIST}" | grep "${WORD}") || BLACKLISTED=false
-
-            if [ "${BLACKLISTED}" = false ]; then
-                if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-                    grep --line-number "${WORD}" "${FILE}"
-                else
-                    # The equals character is required.
-                    grep --line-number --color=always "${WORD}" "${FILE}"
-                fi
+            if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+                grep --line-number "${WORD}" "${FILE}"
             else
-                echo "Blacklisted word: ${WORD}"
+                # The equals character is required.
+                grep --line-number --color=always "${WORD}" "${FILE}"
             fi
         done
 
@@ -80,17 +73,11 @@ for FILE in ${TEX_FILES}; do
             STARTS_WITH_DASH=$(echo "${WORD}" | grep -q '^-') || STARTS_WITH_DASH=false
 
             if [ "${STARTS_WITH_DASH}" = false ]; then
-                BLACKLISTED=$(echo "${BLACKLIST}" | grep "${WORD}") || BLACKLISTED=false
-
-                if [ "${BLACKLISTED}" = false ]; then
-                    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-                        grep --line-number "${WORD}" "${FILE}"
-                    else
-                        # The equals character is required.
-                        grep --line-number --color=always "${WORD}" "${FILE}"
-                    fi
+                if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+                    grep --line-number "${WORD}" "${FILE}"
                 else
-                    echo "Skip blacklisted: ${WORD}"
+                    # The equals character is required.
+                    grep --line-number --color=always "${WORD}" "${FILE}"
                 fi
             else
                 echo "Skip invalid: ${WORD}"
@@ -108,15 +95,15 @@ if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         FILE_REPLACED=$(echo "${FILE}" | ${SED} 's/\//-/g')
         shellcheck --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
     done
-else
-    # shellcheck disable=SC2016
-    SHELL_SCRIPT_CONCERNS=$(${FIND} . -regextype posix-extended -name '*.sh' -regex "${INCLUDE_FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+fi
 
-    if [ ! "${SHELL_SCRIPT_CONCERNS}" = '' ]; then
-        CONCERN_FOUND=true
-        echo "(WARNING) Shell script concerns:"
-        echo "${SHELL_SCRIPT_CONCERNS}"
-    fi
+# shellcheck disable=SC2016
+SHELL_SCRIPT_CONCERNS=$(${FIND} . -regextype posix-extended -name '*.sh' -regex "${INCLUDE_FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+
+if [ ! "${SHELL_SCRIPT_CONCERNS}" = '' ]; then
+    CONCERN_FOUND=true
+    echo "[WARNING] Shell script concerns:"
+    echo "${SHELL_SCRIPT_CONCERNS}"
 fi
 
 # shellcheck disable=SC2016
@@ -124,64 +111,44 @@ EMPTY_FILES=$(${FIND} . -regextype posix-extended -type f -empty -regex "${INCLU
 
 if [ ! "${EMPTY_FILES}" = '' ]; then
     CONCERN_FOUND=true
-
-    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${EMPTY_FILES}" > build/log/empty-files.txt
-    else
-        echo
-        echo "(WARNING) Empty files:"
-        echo
-        echo "${EMPTY_FILES}"
-    fi
+    echo
+    echo "[WARNING] Empty files:"
+    echo
+    echo "${EMPTY_FILES}"
 fi
 
 # shellcheck disable=SC2016
 TO_DOS=$(${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${TO_DOS}" = '' ]; then
-    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${TO_DOS}" > build/log/to-dos.txt
-    else
-        echo
-        echo "(NOTICE) To dos:"
-        echo
-        echo "${TO_DOS}"
-    fi
+    echo
+    echo "[INFO] To dos:"
+    echo
+    echo "${TO_DOS}"
 fi
 
 DUPLICATE_WORDS=$(cat documentation/dictionary/** | ${SED} '/^$/d' | sort | ${UNIQ} -cd)
 
 if [ ! "${DUPLICATE_WORDS}" = '' ]; then
     CONCERN_FOUND=true
-
-    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${DUPLICATE_WORDS}" > build/log/duplicate-words.txt
-    else
-        echo
-        echo "(WARNING) Duplicate words:"
-        echo "${DUPLICATE_WORDS}"
-    fi
+    echo
+    echo "[WARNING] Duplicate words:"
+    echo "${DUPLICATE_WORDS}"
 fi
 
 # shellcheck disable=SC2016
 SHELLCHECK_DISABLES=$(${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh -c 'grep -Hrn "# shellcheck disable" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${SHELLCHECK_DISABLES}" = '' ]; then
-    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${SHELLCHECK_DISABLES}" > build/log/shellcheck-ignores.txt
-    else
-        echo
-        echo "(NOTICE) Shellcheck disables:"
-        echo
-        echo "${SHELLCHECK_DISABLES}"
-    fi
+    echo
+    echo "[INFO] Shellcheck disables:"
+    echo
+    echo "${SHELLCHECK_DISABLES}"
 fi
 
 if [ "${CONCERN_FOUND}" = true ]; then
-    if [ "${CONTINUOUS_INTEGRATION_MODE}" = false ]; then
-        echo
-        echo "Concern(s) of category WARNING found." >&2
-    fi
+    echo
+    echo "Warning level concern(s) found." >&2
 
     exit 2
 fi
