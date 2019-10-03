@@ -53,5 +53,5 @@ export EXCLUDE_FILTER
 # TODO: Test and expand this through all skeleton projects.
 INCLUDE_FILTER="^\.\/((src|test|spec|lib|debian|configuration|documentation|test|script\/skeleton)\/.*|\.gitignore|Vagrantfile|Dockerfile|README.md)$"
 export INCLUDE_FILTER
-# TODO: Maybe use a different exclude filter for when syncing with Python code directories to exclude the cache.
-#EXCLUDE_FILTER='^.*\/__pycache__\/.*$'
+INCLUDE_STILL_FILTER='^.*\/__pycache__\/.*$'
+export INCLUDE_STILL_FILTER

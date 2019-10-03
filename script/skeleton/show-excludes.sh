@@ -30,10 +30,8 @@ SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Darwin ]; then
     FIND='gfind'
-    SED='gsed'
 else
     FIND='find'
-    SED='sed'
 fi
 
 cd "${TARGET}" || exit 1
