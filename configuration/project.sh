@@ -51,7 +51,7 @@ export EXCLUDE_FILTER
 # test: php
 # spec: ruby
 # TODO: Test and expand this through all skeleton projects.
-INCLUDE_FILTER="^\.\/((src|test|spec|lib|debian|configuration|documentation|test|script\/skeleton)\/.*|\.gitignore|Vagrantfile|Dockerfile|README.md)$"
+INCLUDE_FILTER="^\.\/((src|test|spec|lib|debian|configuration|documentation|test|script\/skeleton)\/.*|\.gitignore|Vagrantfile|Dockerfile|README.md|package\.json|sonar-project\.properties|web\/index\.html)$"
 export INCLUDE_FILTER
 INCLUDE_STILL_FILTER='^.*\/__pycache__\/.*$'
 export INCLUDE_STILL_FILTER
