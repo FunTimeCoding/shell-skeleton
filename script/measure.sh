@@ -21,12 +21,12 @@ else
     FIND='find'
 fi
 
-FILES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea)\/.*$'
+FILES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea|\.venv|\.tox|__pycache__|[a-z_]+\.egg-info)\/.*$'
 FILES=$(${FIND} . -type f -regextype posix-extended ! -regex "${FILES_EXCLUDE}" | ${WC} --lines)
-DIRECTORIES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea)(\/.*)?$'
+DIRECTORIES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea|\.venv|\.tox|__pycache__)(\/.*)?$'
 DIRECTORIES=$(${FIND} . -type d -regextype posix-extended ! -regex "${DIRECTORIES_EXCLUDE}" | ${WC} --lines)
 INCLUDE='^.*\.sh$'
-CODE_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea)\/.*$'
+CODE_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea|\.venv|\.tox)\/.*$'
 CODE_EXCLUDE_JAVA_SCRIPT='^\.\/web/main\.js$'
 CODE=$(${FIND} . -type f -regextype posix-extended -regex "${INCLUDE}" -and ! -regex "${CODE_EXCLUDE}" -and ! -regex "${CODE_EXCLUDE_JAVA_SCRIPT}" | xargs cat)
 LINES=$(echo "${CODE}" | ${WC} --lines)

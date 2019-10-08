@@ -35,4 +35,4 @@ else
 fi
 
 cd "${TARGET}" || exit 1
-${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}"
+${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" ! -regex "${INCLUDE_STILL_FILTER}"
