@@ -5,9 +5,23 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
-    echo "Usage: ${0}"
+    echo "Usage: ${0} [SUBCOMMAND]"
 }
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/shell_skeleton.sh"
-echo "Hello friend."
+SUBCOMMAND=${1}
+
+if [ "${SUBCOMMAND}" = '' ]; then
+    echo "Available subcommands:"
+
+    # shellcheck disable=SC2086
+    for SCRIPT in "${SCRIPT_DIRECTORY}"/*; do
+        if [ ! "${SCRIPT}" = "${0}" ]; then
+            basename "${SCRIPT}"
+        fi
+    done
+else
+    # shellcheck disable=SC2086,SC2068
+    ${SCRIPT_DIRECTORY}/${SUBCOMMAND} $@
+fi

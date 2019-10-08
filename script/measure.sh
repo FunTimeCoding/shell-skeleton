@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/project.sh"
+. "${SCRIPT_DIRECTORY}/../configuration/project.sh"
 
 if [ "${1}" = --help ]; then
     echo "Usage: ${0} [--ci-mode]"
@@ -21,13 +21,14 @@ else
     FIND='find'
 fi
 
-FILES_EXCLUDE='^.*\/(build|tmp|vendor|\.git|\.vagrant|\.idea)\/.*$'
+FILES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea)\/.*$'
 FILES=$(${FIND} . -type f -regextype posix-extended ! -regex "${FILES_EXCLUDE}" | ${WC} --lines)
-DIRECTORIES_EXCLUDE='^.*\/(build|tmp|vendor|\.git|\.vagrant|\.idea)(\/.*)?$'
+DIRECTORIES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea)(\/.*)?$'
 DIRECTORIES=$(${FIND} . -type d -regextype posix-extended ! -regex "${DIRECTORIES_EXCLUDE}" | ${WC} --lines)
 INCLUDE='^.*\.sh$'
-CODE_EXCLUDE='^.*\/(build|tmp|vendor|\.git|\.vagrant|\.idea)\/.*$'
-CODE=$(${FIND} . -type f -regextype posix-extended -regex "${INCLUDE}" -and ! -regex "${CODE_EXCLUDE}" | xargs cat)
+CODE_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea)\/.*$'
+CODE_EXCLUDE_JAVA_SCRIPT='^\.\/web/main\.js$'
+CODE=$(${FIND} . -type f -regextype posix-extended -regex "${INCLUDE}" -and ! -regex "${CODE_EXCLUDE}" -and ! -regex "${CODE_EXCLUDE_JAVA_SCRIPT}" | xargs cat)
 LINES=$(echo "${CODE}" | ${WC} --lines)
 NON_BLANK_LINES=$(echo "${CODE}" | grep --invert-match --regexp '^$' | ${WC} --lines)
 echo "FILES: ${FILES}"

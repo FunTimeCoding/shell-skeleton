@@ -8,4 +8,5 @@ copy configuration\minion.yaml tmp\salt\minion.conf
 
 vagrant up
 vagrant ssh --command /vagrant/script/vagrant/vagrant.sh
+vagrant ssh --command /vagrant/script/vagrant/ansible.sh
 pause

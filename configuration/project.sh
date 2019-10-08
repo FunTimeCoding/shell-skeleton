@@ -45,3 +45,13 @@ export VENDOR_NAME_LOWER
 # target: Do not not break java-skeleton based projects.
 EXCLUDE_FILTER='^.*\/(build|tmp|vendor|node_modules|target|\.venv|\.git|\.vagrant|\.idea|\.scannerwork|\.tox|\.cache|__pycache__|[a-z_]+\.egg-info)\/.*$'
 export EXCLUDE_FILTER
+
+# lib: shell, ruby
+# src: php, java, clojure, scala, c-sharp
+# test: php
+# spec: ruby
+# TODO: Test and expand this through all skeleton projects.
+INCLUDE_FILTER="^\.\/((src|test|spec|lib|debian|configuration|documentation|test|script\/skeleton)\/.*|\.gitignore|Vagrantfile|Dockerfile|README.md|package\.json|sonar-project\.properties|web\/index\.html|composer\.json)$"
+export INCLUDE_FILTER
+INCLUDE_STILL_FILTER='^.*\/__pycache__\/.*$'
+export INCLUDE_STILL_FILTER

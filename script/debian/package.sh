@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../../lib/project.sh"
+. "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
 script/debian/generate-manual.sh
 ARCHIVE="${PROJECT_NAME_DASH}_${PROJECT_VERSION}.orig.tar.gz"
@@ -14,7 +14,7 @@ if [ ! -f debian/changelog ]; then
 fi
 
 mkdir -p build
-tar --create --gzip --transform "s,^,${PROJECT_ROOT}/," --exclude='./build' --exclude './tmp' --exclude './.idea' --exclude './.git' --exclude './.vagrant' --file "build/${ARCHIVE}" .
+tar --create --gzip --transform "s,^,${PROJECT_ROOT}/," --exclude='./build' --exclude './tmp' --exclude './.idea' --exclude './.git' --exclude './.vagrant' --exclude './.venv' --exclude './.scannerwork' --file "build/${ARCHIVE}" .
 cd build
 tar --extract --file "${ARCHIVE}"
 cd "${PROJECT_ROOT}"
