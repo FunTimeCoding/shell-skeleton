@@ -32,7 +32,7 @@ Configure Git on Windows before cloning:
 git config --global core.autocrlf input
 ```
 
-Install NFS plugin for Vagrant on Windows:
+Install NFS plug-in for Vagrant on Windows:
 
 ```bat
 vagrant plugin install vagrant-winnfsd
