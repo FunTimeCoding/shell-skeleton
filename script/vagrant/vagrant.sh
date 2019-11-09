@@ -23,3 +23,13 @@ cp /vagrant/configuration/profile.sh /home/vagrant/.profile
 chmod -x /home/vagrant/.profile
 cp /vagrant/configuration/aliases.sh /home/vagrant/.aliases
 chmod -x /home/vagrant/.aliases
+
+if [ -f /vagrant/tmp/gitconfig.txt ]; then
+    cp /vagrant/tmp/gitconfig.txt /home/vagrant/.gitconfig
+    chmod -x /home/vagrant/.gitconfig
+fi
+
+if [ -f /vagrant/tmp/gitignore_global.txt ]; then
+    cp /vagrant/tmp/gitignore_global.txt /home/vagrant/.gitignore_global
+    chmod -x /home/vagrant/.gitignore_global
+fi
