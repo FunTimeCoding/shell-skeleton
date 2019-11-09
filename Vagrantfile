@@ -1,6 +1,5 @@
 Vagrant.configure('2') do |c|
-  c.vm.box = 'debian/stretch64'
-  #c.vm.box = 'debian/buster64'
+  c.vm.box = 'debian/buster64'
   c.ssh.forward_agent = true
   Dir.mkdir('tmp') unless File.exist?('tmp')
 
@@ -73,7 +72,7 @@ Vagrant.configure('2') do |c|
     #s.path = 'tmp/bootstrap-salt.sh'
     # Jessie versions: https://repo.saltstack.com/apt/debian/8/amd64
     # Stretch versions: https://repo.saltstack.com/apt/debian/9/amd64
-    # Buster versions: https://repo.saltstack.com/apt/debian/10/amd64
+    # Buster versions: http://repo.saltstack.com/py3/debian/10/amd64
     #s.args = ['-U', '-i', hostname + '.' + domain, '-c', '/vagrant/tmp/salt', 'stable', '2018.3.3']
   end
 
