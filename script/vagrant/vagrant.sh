@@ -19,3 +19,7 @@ cp /vagrant/configuration/ssh.txt /home/vagrant/.ssh/config
 chmod -x /home/vagrant/.ssh/config
 cp /vagrant/configuration/inputrc.txt /home/vagrant/.inputrc
 chmod -x /home/vagrant/.inputrc
+cp /vagrant/configuration/profile.sh /home/vagrant/.profile
+chmod -x /home/vagrant/.profile
+cp /vagrant/configuration/aliases.sh /home/vagrant/.aliases
+chmod -x /home/vagrant/.aliases
