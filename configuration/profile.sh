@@ -30,5 +30,8 @@ if [ -f "$HOME/.aliases" ]; then
     . "$HOME/.aliases"
 fi
 
-# disable bell in less
-export LESS=-Q
+# F: quit if smaller than one screen
+# R: enable color
+# X: do not clear on exit
+# Q: disable bell
+export LESS='FRXQ'
