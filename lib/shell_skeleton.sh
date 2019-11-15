@@ -30,6 +30,6 @@ if [ "${CONFIGURATION}" = '' ]; then
 fi
 
 if [ -f "${CONFIGURATION}" ]; then
-    # shellcheck source=/dev/null
+    # shellcheck source=configuration/example.sh
     . "${CONFIGURATION}"
 fi

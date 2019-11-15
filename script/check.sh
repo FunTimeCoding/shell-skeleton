@@ -93,12 +93,12 @@ if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
 
     for FILE in ${FILES}; do
         FILE_REPLACED=$(echo "${FILE}" | ${SED} 's/\//-/g')
-        shellcheck --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
+        shellcheck --external-sources --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
     done
 fi
 
 # shellcheck disable=SC2016
-SHELL_SCRIPT_CONCERNS=$(${FIND} . -regextype posix-extended -name '*.sh' -regex "${INCLUDE_FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+SHELL_SCRIPT_CONCERNS=$(${FIND} . -regextype posix-extended -name '*.sh' -regex "${INCLUDE_FILTER}" -exec sh -c 'shellcheck --external-sources ${1} || true' '_' '{}' \;)
 
 if [ ! "${SHELL_SCRIPT_CONCERNS}" = '' ]; then
     CONCERN_FOUND=true
