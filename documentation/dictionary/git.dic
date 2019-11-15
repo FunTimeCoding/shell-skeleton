@@ -1,3 +1,5 @@
 autocrlf
 config
 gitmodules
+gitconfig
+gitignore
