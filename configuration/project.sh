@@ -53,12 +53,13 @@ export EXCLUDE_FILTER
 # lib: shell, ruby
 # src: php, java, clojure, scala, c-sharp
 # test: php
+# benchmark: php
 # tests: python
 # spec: ruby
 # PROJECT_NAME_UNDERSCORE: python
 # TODO: Test and expand this through all skeleton projects.
 # shellcheck disable=SC1117
-INCLUDE_FILTER="^\.\/((src|test|tests|spec|lib|debian|configuration|documentation|test|script\/skeleton|${PROJECT_NAME_UNDERSCORE})\/.*|\.gitignore|Vagrantfile|Dockerfile|README.md|package\.json|sonar-project\.properties|web\/index\.html|composer\.json)$"
+INCLUDE_FILTER="^\.\/((src|test|benchmark|tests|spec|lib|debian|configuration|documentation|test|script\/skeleton|${PROJECT_NAME_UNDERSCORE})\/.*|\.gitignore|Vagrantfile|Dockerfile|README.md|package\.json|sonar-project\.properties|web\/index\.html|composer\.json)$"
 export INCLUDE_FILTER
 INCLUDE_STILL_FILTER='^.*\/__pycache__\/.*$'
 export INCLUDE_STILL_FILTER
