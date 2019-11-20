@@ -10,7 +10,7 @@ if [ "${CODENAME}" = jessie ]; then
 elif [ "${CODENAME}" = stretch ]; then
     cp /vagrant/configuration/backports.txt /etc/apt/sources.list.d/backports.list
     apt-get --quiet 2 update
-    apt-get --quiet 2 install neovim multitail htop tree git shellcheck hunspell devscripts ronn dos2unix
+    apt-get --quiet 2 install neovim multitail htop tree git shellcheck hunspell devscripts ruby-ronn dos2unix
     apt-get --quiet 2 install ansible --target-release stretch-backports
 elif [ "${CODENAME}" = buster ]; then
     apt-get --quiet 2 install neovim multitail htop tree git shellcheck hunspell devscripts ronn dos2unix ansible
