@@ -3,3 +3,6 @@ config
 gitmodules
 gitconfig
 gitignore
+excludesfile
+difftool
+mergetool
