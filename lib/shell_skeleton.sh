@@ -1,25 +1,25 @@
-#!/bin/sh -e
+#shellcheck shell=sh
 
 CONFIGURATION=''
 
 while true; do
     case ${1} in
-        --help)
-            echo "Global usage: ${0} [--help][--configuration CONFIGURATION]"
+    --help)
+        echo "Global usage: ${0} [--help][--configuration CONFIGURATION]"
 
-            if command -v usage > /dev/null; then
-                usage
-            fi
+        if command -v usage >/dev/null; then
+            usage
+        fi
 
-            exit 0
-            ;;
-        --configuration)
-            CONFIGURATION=${2-}
-            shift 2
-            ;;
-        *)
-            break
-            ;;
+        exit 0
+        ;;
+    --configuration)
+        CONFIGURATION=${2-}
+        shift 2
+        ;;
+    *)
+        break
+        ;;
     esac
 done
 
