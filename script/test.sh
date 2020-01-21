@@ -21,7 +21,8 @@ if [ "${1}" = --ci-mode ]; then
 fi
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    shellspec --format junit > build/log/junit.xml
+    shellspec --kcov --format junit > build/log/junit.xml
+    mv coverage build/log
 else
     shellspec
 fi

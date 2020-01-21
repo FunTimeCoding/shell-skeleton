@@ -1,3 +1,5 @@
+#shellcheck shell=sh
+
 Describe "Sample specfile"
 #  Describe "hello()"
 #    hello() {
