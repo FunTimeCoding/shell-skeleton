@@ -15,14 +15,7 @@ if [ "${1}" = --help ]; then
 fi
 
 if [ "${1}" = --ci-mode ]; then
-    shift
-    mkdir -p build/log
-    CONTINUOUS_INTEGRATION_MODE=true
-fi
-
-if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    shellspec --kcov --format junit > build/log/junit.xml
-    mv coverage build/log
+    script/shell/test.sh --ci-mode
 else
-    shellspec
+    script/shell/test.sh
 fi
