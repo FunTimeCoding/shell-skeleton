@@ -14,7 +14,7 @@ HOST_NAME=$(cat tmp/hostname.txt)
 DOMAIN=$(cat tmp/domain.txt)
 ABSOLUTE_DOMAIN_NAME="${HOST_NAME}.${DOMAIN}"
 RESULT=$(grep "${ABSOLUTE_DOMAIN_NAME}" /etc/hosts) || RESULT=''
-ADDRESS=$(vagrant ssh --command script/vagrant/address.sh)
+ADDRESS=$(vagrant ssh --command /vagrant/script/vagrant/address.sh | tr -d '\r')
 
 if [ "${RESULT}" = '' ]; then
     # shellcheck disable=SC1117
