@@ -50,4 +50,4 @@ do
 	fi
 done
 
-exit 0
+script/test.sh
