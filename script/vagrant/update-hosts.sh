@@ -18,7 +18,7 @@ ADDRESS=$(vagrant ssh --command /vagrant/script/vagrant/address.sh | tr -d '\r')
 
 if [ "${RESULT}" = '' ]; then
     # shellcheck disable=SC1117
-    printf "%s\t%s\n" "${ADDRESS}" "${ABSOLUTE_DOMAIN_NAME}" | sudo ${TEE} --append /etc/hosts > /dev/null
+    printf "%s\t%s\n" "${ADDRESS}" "${ABSOLUTE_DOMAIN_NAME}" | sudo ${TEE} --append /etc/hosts >/dev/null
 else
     ADDRESS_IN_FILE=$(echo "${RESULT}" | awk '{ print $1 }')
 
