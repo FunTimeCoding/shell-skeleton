@@ -20,8 +20,8 @@ Vagrant.configure('2') do |c|
   else
     # TODO: Make this work on Windows.
     hostname = `. configuration/project.sh && echo "${PROJECT_NAME_INITIALS}"`
-    File.write('tmp/hostname.txt', hostname)
     hostname = hostname.chomp
+    File.write('tmp/hostname.txt', hostname + "\n")
   end
 
   if File.exist?('tmp/domain.txt')
@@ -29,14 +29,20 @@ Vagrant.configure('2') do |c|
   else
     # TODO: Make this work on Windows.
     domain = `hostname -f`
-    File.write('tmp/domain.txt', domain)
     domain = domain.chomp
+    File.write('tmp/domain.txt', domain + "\n")
   end
 
   c.vm.network :public_network, bridge: bridge
   c.vm.network :private_network, ip: '192.168.42.3'
 
-  c.vm.synced_folder '.', '/vagrant', type: 'nfs'
+  if RbConfig::CONFIG['host_os'] =~ /mswin32|mingw32/
+    mount_type = 'virtualbox'
+  else
+    mount_type = 'nfs'
+  end
+
+  c.vm.synced_folder '.', '/vagrant', type: mount_type
 
   c.vm.provider :virtualbox do |v|
     v.name = 'shell-skeleton'
@@ -62,7 +68,7 @@ Vagrant.configure('2') do |c|
     end
   end
 
-  c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: 'nfs'
+  c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type
 
   c.vm.provision :shell do |s|
     s.path = 'script/vagrant/salt.sh'
