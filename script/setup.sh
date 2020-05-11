@@ -40,7 +40,7 @@ if [ "$(command -v vboxmanage || true)" = '' ]; then
         fi
 
         sudo apt-get --quiet 2 update
-        sudo apt-get --quiet 2 install virtualbox-6.0
+        sudo apt-get --quiet 2 install virtualbox-6.1
     fi
 fi
 
@@ -48,7 +48,7 @@ if [ "$(command -v vagrant || true)" = '' ]; then
     if [ "${SYSTEM}" = Darwin ]; then
         brew cask install vagrant
     else
-        VAGRANT_VERSION=2.2.6
+        VAGRANT_VERSION=2.2.8
         wget --no-verbose --output-document /tmp/vagrant.deb "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb"
         sudo dpkg --install /tmp/vagrant.deb
     fi

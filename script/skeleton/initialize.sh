@@ -1,7 +1,10 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 NAME=$(echo "${1}" | grep --extended-regexp '^([A-Z]+[a-z0-9]*){1,}$') || NAME=''
@@ -35,4 +38,4 @@ ${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh 
 ${SED} --in-place --expression "s/bin\/ss/bin\/${INITIALS}/g" README.md Dockerfile
 git mv lib/shell_skeleton.sh "lib/${UNDERSCORE}.sh"
 git mv bin/ss "bin/${INITIALS}"
-echo "# This dictionary file is for domain language." > "documentation/dictionary/${DASH}.dic"
+echo "# This dictionary file is for domain language." >"documentation/dictionary/${DASH}.dic"
