@@ -3,11 +3,11 @@
 rm -rf build
 script/check.sh --ci-mode
 script/measure.sh --ci-mode
+script/test.sh --ci-mode
 SYSTEM=$(uname)
 
-if [ "${SYSTEM}" = Linux ]; then
-    script/debian/package.sh
-fi
-
-# TODO: Finish implementation.
-#script/docker/build.sh
+# TODO: Needs polish.
+#if [ "${SYSTEM}" = Linux ]; then
+#    script/debian/package.sh
+#    script/docker/build.sh
+#fi
