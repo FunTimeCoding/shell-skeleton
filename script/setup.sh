@@ -48,7 +48,7 @@ if [ "$(command -v vagrant || true)" = '' ]; then
     if [ "${SYSTEM}" = Darwin ]; then
         brew cask install vagrant
     else
-        VAGRANT_VERSION=2.2.8
+        VAGRANT_VERSION=2.2.9
         wget --no-verbose --output-document /tmp/vagrant.deb "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb"
         sudo dpkg --install /tmp/vagrant.deb
     fi
