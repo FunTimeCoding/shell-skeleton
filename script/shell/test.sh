@@ -22,7 +22,7 @@ fi
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     export SHELLSPEC_LOGFILE=build/log/shellspec.txt
-    shellspec --kcov --format junit >build/log/junit.xml
+    shellspec --no-color --kcov --format junit >build/log/junit.xml
     mv coverage build/log
 else
     shellspec
