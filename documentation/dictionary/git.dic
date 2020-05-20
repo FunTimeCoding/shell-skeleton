@@ -6,3 +6,4 @@ gitignore
 excludesfile
 difftool
 mergetool
+allownonascii
