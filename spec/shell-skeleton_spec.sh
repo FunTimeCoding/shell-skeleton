@@ -1,6 +1,6 @@
 #shellcheck shell=sh
 
-Describe "Sample specfile"
+Describe "Sample spec-file"
 #  Describe "hello()"
 #    hello() {
 #      echo # "hello $1"
