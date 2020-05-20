@@ -77,6 +77,7 @@ if [ "${1}" = --ci-mode ]; then
             exit 1
         else
             printf .
+            sleep 1
         fi
     done
 
