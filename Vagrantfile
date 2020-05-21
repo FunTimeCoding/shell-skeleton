@@ -36,13 +36,7 @@ Vagrant.configure('2') do |c|
   c.vm.network :public_network, bridge: bridge
   c.vm.network :private_network, ip: '192.168.42.3'
 
-  if RbConfig::CONFIG['host_os'] =~ /mswin32|mingw32/
-    mount_type = 'virtualbox'
-  else
-    mount_type = 'nfs'
-  end
-
-  c.vm.synced_folder '.', '/vagrant', type: mount_type
+  c.vm.synced_folder '.', '/vagrant', type: 'nfs'
 
   c.vm.provider :virtualbox do |v|
     v.name = 'shell-skeleton'
@@ -68,7 +62,7 @@ Vagrant.configure('2') do |c|
     end
   end
 
-  c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: mount_type
+  c.vm.synced_folder 'salt-provisioning', '/srv/salt', type: 'nfs'
 
   c.vm.provision :shell do |s|
     s.path = 'script/vagrant/salt.sh'
