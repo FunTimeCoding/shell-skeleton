@@ -53,7 +53,7 @@ if [ "${1}" = --ci-mode ]; then
     if [ -f "${HOME}/.static-analysis-tools.sh" ]; then
         # shellcheck source=/dev/null
         . "${HOME}/.static-analysis-tools.sh"
-        sonar-scanner "-Dsonar.projectKey=${PROJECT_NAME_DASH}" -Dsonar.sources=. "-Dsonar.host.url=${SONAR_SERVER}" "-Dsonar.login=${SONAR_TOKEN}" | "${TEE}" build/log/sonar-runner.log
+        sonar-scanner --define "sonar.projectKey=${PROJECT_NAME_DASH}" --define "sonar.sources=." --define "sonar.host.url=${SONAR_SERVER}" --define "sonar.login=${SONAR_TOKEN}" | "${TEE}" build/log/sonar-runner.log
     else
         echo "SonarQube configuration missing."
 
