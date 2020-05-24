@@ -29,7 +29,7 @@ FILES=$(${FIND} . -type f -regextype posix-extended ! -regex "${FILES_EXCLUDE}" 
 DIRECTORIES_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea|\.tox|__pycache__)(\/.*)?$'
 DIRECTORIES=$(${FIND} . -type d -regextype posix-extended ! -regex "${DIRECTORIES_EXCLUDE}" | ${WC} --lines)
 INCLUDE='^.*\.sh$'
-CODE_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|\.git|\.vagrant|\.idea|\.tox)\/.*$'
+CODE_EXCLUDE='^.*\/(build|tmp|vendor|node_modules|target|\.git|\.vagrant|\.idea|\.tox)\/.*$'
 CODE_EXCLUDE_JAVA_SCRIPT='^\.\/web/main\.js$'
 CODE=$(${FIND} . -type f -regextype posix-extended -regex "${INCLUDE}" -and ! -regex "${CODE_EXCLUDE}" -and ! -regex "${CODE_EXCLUDE_JAVA_SCRIPT}" | xargs cat)
 LINES=$(echo "${CODE}" | ${WC} --lines)
@@ -71,7 +71,7 @@ if [ "${1}" = --ci-mode ]; then
             break
         fi
 
-        if [ "${SECOND}" = 60 ]; then
+        if [ "${SECOND}" = 20 ]; then
             echo "Timeout reached."
 
             exit 1
