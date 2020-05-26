@@ -49,11 +49,23 @@ if [ "${1}" = --ci-mode ]; then
     fi
 
     mkdir -p build/log
+    LAST_ANALYSIS_EPOCH=0
 
     if [ -f "${HOME}/.static-analysis-tools.sh" ]; then
         # shellcheck source=/dev/null
         . "${HOME}/.static-analysis-tools.sh"
-        BEFORE_ANALYSIS_EPOCH=$(date "+%s")
+
+        OUTPUT_BEFORE=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component?component=${PROJECT_NAME_DASH}&metricKeys=sqale_index&additionalFields=period")
+        ERRORS=$(echo "${OUTPUT_BEFORE}" | jq --raw-output 'select(.errors)')
+
+        if [ "${ERRORS}" = '' ]; then
+            COMPONENT_KEY=$(echo "${OUTPUT_BEFORE}" | jq --raw-output '.component.key')
+            LAST_ANALYSIS_ISO_DATE=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/project_analyses/search?project=${COMPONENT_KEY}" | jq --raw-output '.analyses[0].date')
+            LAST_ANALYSIS_EPOCH=$(date -d "${LAST_ANALYSIS_ISO_DATE}" "+%s")
+        else
+            echo "Error: ${OUTPUT_BEFORE}"
+        fi
+
         sonar-scanner --define "sonar.projectKey=${PROJECT_NAME_DASH}" --define "sonar.sources=." --define "sonar.host.url=${SONAR_SERVER}" --define "sonar.login=${SONAR_TOKEN}" | "${TEE}" build/log/sonar-runner.log
     else
         echo "SonarQube configuration missing."
@@ -61,25 +73,27 @@ if [ "${1}" = --ci-mode ]; then
         exit 1
     fi
 
-    RESULT_COUNT=0
+    for SECOND in $(seq 1 30); do
+        OUTPUT_CURRENT=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component?component=${PROJECT_NAME_DASH}&metricKeys=sqale_index,duplicated_blocks,duplicated_lines_density&additionalFields=period")
+        MEASURE_COUNT=$(echo "${OUTPUT_CURRENT}" | jq --raw-output '.component.measures | length')
 
-    for SECOND in $(seq 1 60); do
-        OUTPUT=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component?component=${PROJECT_NAME_DASH}&metricKeys=sqale_index,duplicated_blocks,duplicated_lines_density&additionalFields=period")
-        RESULT_COUNT=$(echo "${OUTPUT}" | jq --raw-output '.component.measures | length')
+        if [ ! "${MEASURE_COUNT}" = 0 ]; then
+            COMPONENT_KEY=$(echo "${OUTPUT_CURRENT}" | jq --raw-output '.component.key')
+            CURRENT_ANALYSIS_ISO_DATE=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/project_analyses/search?project=${COMPONENT_KEY}" | jq --raw-output '.analyses[0].date')
 
-        if [ ! "${RESULT_COUNT}" = 0 ]; then
-            ISO_DATE=$(echo "${OUTPUT}" | jq --raw-output '.period.date')
-            ANALYSIS_EPOCH=$(date -d "${ISO_DATE}" "+%s")
+            if [ ! "${CURRENT_ANALYSIS_ISO_DATE}" = 'null' ]; then
+                CURRENT_ANALYSIS_EPOCH=$(date -d "${CURRENT_ANALYSIS_ISO_DATE}" "+%s")
 
-            if [ "${ANALYSIS_EPOCH}" -gt "${BEFORE_ANALYSIS_EPOCH}" ]; then
-                # New result found. Add newline after dots.
-                echo ''
+                if [ "${CURRENT_ANALYSIS_EPOCH}" -gt "${LAST_ANALYSIS_EPOCH}" ]; then
+                    # New result found. Add newline after dots.
+                    echo ''
 
-                break
+                    break
+                fi
             fi
         fi
 
-        if [ "${SECOND}" = 60 ]; then
+        if [ "${SECOND}" = 30 ]; then
             echo "Timeout reached."
 
             exit 1
@@ -90,21 +104,21 @@ if [ "${1}" = --ci-mode ]; then
     done
 
     CONCERN_FOUND=false
-    SQALE_INDEX=$(echo "${OUTPUT}" | jq --raw-output '.component.measures[] | select(.metric == "sqale_index") | .value')
+    SQALE_INDEX=$(echo "${OUTPUT_CURRENT}" | jq --raw-output '.component.measures[] | select(.metric == "sqale_index") | .value')
 
     if [ "${SQALE_INDEX}" -gt 0 ]; then
         CONCERN_FOUND=true
         echo "Warning: SQALE_INDEX ${SQALE_INDEX}"
     fi
 
-    DUPLICATED_BLOCKS=$(echo "${OUTPUT}" | jq --raw-output '.component.measures[] | select(.metric == "duplicated_blocks") | .value')
+    DUPLICATED_BLOCKS=$(echo "${OUTPUT_CURRENT}" | jq --raw-output '.component.measures[] | select(.metric == "duplicated_blocks") | .value')
 
     if [ "${DUPLICATED_BLOCKS}" -gt 0 ]; then
         CONCERN_FOUND=true
         echo "Warning: DUPLICATED_BLOCKS ${DUPLICATED_BLOCKS}"
     fi
 
-    DUPLICATED_LINES_DENSITY=$(echo "${OUTPUT}" | jq --raw-output '.component.measures[] | select(.metric == "duplicated_lines_density") | .value')
+    DUPLICATED_LINES_DENSITY=$(echo "${OUTPUT_CURRENT}" | jq --raw-output '.component.measures[] | select(.metric == "duplicated_lines_density") | .value')
     DUPLICATED_LINES_DENSITY_CEIL=$(python3 -c "from math import ceil; print(ceil(${DUPLICATED_LINES_DENSITY}))")
 
     if [ "${DUPLICATED_LINES_DENSITY_CEIL}" -gt 0 ]; then
