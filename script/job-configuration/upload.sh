@@ -9,3 +9,4 @@ SCRIPT_DIRECTORY=$(
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
 ~/src/jenkins-tools/bin/put-job.sh "${PROJECT_NAME_DASH}" configuration/job.xml
+~/src/jenkins-tools/bin/build.sh "${PROJECT_NAME_DASH}"
