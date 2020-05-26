@@ -64,7 +64,7 @@ if [ "${1}" = --ci-mode ]; then
     RESULT_COUNT=0
 
     for SECOND in $(seq 1 60); do
-        OUTPUT=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component?component=${PROJECT_NAME_DASH}&metricKeys=sqale_index&additionalFields=period")
+        OUTPUT=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/measures/component?component=${PROJECT_NAME_DASH}&metricKeys=sqale_index,duplicated_blocks,duplicated_lines_density&additionalFields=period")
         RESULT_COUNT=$(echo "${OUTPUT}" | jq --raw-output '.component.measures | length')
 
         if [ ! "${RESULT_COUNT}" = 0 ]; then
@@ -79,7 +79,7 @@ if [ "${1}" = --ci-mode ]; then
             fi
         fi
 
-        if [ "${SECOND}" = 20 ]; then
+        if [ "${SECOND}" = 60 ]; then
             echo "Timeout reached."
 
             exit 1
