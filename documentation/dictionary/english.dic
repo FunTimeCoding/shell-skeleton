@@ -7,3 +7,5 @@ expectedly
 subcommand
 subcommands
 logins
+hostnames
+noninteractive

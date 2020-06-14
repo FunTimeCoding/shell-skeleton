@@ -34,3 +34,9 @@ sensiolabs
 deptrac
 phpbench
 Nginx
+icinga
+darkstat
+postgresql
+ntopng
+collectl
+clickhouse

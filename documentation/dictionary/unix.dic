@@ -20,3 +20,11 @@ shellspec
 kcov
 regextype
 Solaris
+uname
+Netcat
+sysctl
+mailq
+egrep
+passwd
+cronjobs
+sysv
