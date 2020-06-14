@@ -17,6 +17,7 @@ pip3
 python3
 gitpython
 mypy
+lxml
 
 # pytest
 pytest
@@ -42,3 +43,7 @@ mymodule
 inlinevar
 regexes
 classmethod
+
+# pyzabbix
+pyzabbix
+applicationid

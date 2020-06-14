@@ -11,3 +11,4 @@ pybuild
 buildsystem
 libyaml
 libxslt
+debmon
