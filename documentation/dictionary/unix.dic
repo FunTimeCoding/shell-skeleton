@@ -20,7 +20,6 @@ shellspec
 kcov
 regextype
 Solaris
-uname
 Netcat
 sysctl
 mailq
