@@ -38,4 +38,3 @@ ${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh 
 ${SED} --in-place --expression "s/bin\/ss/bin\/${INITIALS}/g" README.md Dockerfile
 git mv lib/shell_skeleton.sh "lib/${UNDERSCORE}.sh"
 git mv bin/ss "bin/${INITIALS}"
-echo "# This dictionary file is for domain language." >"documentation/dictionary/${DASH}.dic"
