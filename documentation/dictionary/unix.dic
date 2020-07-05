@@ -6,6 +6,7 @@ sudo
 uniq
 sshd
 netmask
+nameserver
 nameservers
 DHCP
 realpath
@@ -27,3 +28,11 @@ egrep
 passwd
 cronjobs
 sysv
+htoprc
+nano
+lesshst
+HISTFILE
+chroot
+chsh
+stdin
+sqlite
