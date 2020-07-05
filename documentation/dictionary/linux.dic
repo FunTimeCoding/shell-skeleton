@@ -3,3 +3,10 @@ inet
 netstat
 libpam
 zoneinfo
+mkpasswd
+udev
+inittab
+initrd
+syslinux
+ifdata
+dhclient

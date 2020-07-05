@@ -18,6 +18,8 @@ python3
 gitpython
 mypy
 lxml
+passlib
+sitepackages
 
 # pytest
 pytest
@@ -47,3 +49,9 @@ classmethod
 # pyzabbix
 pyzabbix
 applicationid
+
+# tox
+envlist
+testenv
+deps
+sitepackages
