@@ -1,5 +1,7 @@
 Vagrant.configure('2') do |c|
   c.vm.box = 'debian/buster64'
+  # TODO: Add a way to switch without having to rewrite this file.
+  #c.vm.box = 'centos/7'
   c.ssh.forward_agent = true
   Dir.mkdir('tmp') unless File.exist?('tmp')
 

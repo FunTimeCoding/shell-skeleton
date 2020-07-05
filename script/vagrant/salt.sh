@@ -13,4 +13,20 @@ if [ ! "${CONFIGURATION_PATH}" = '' ]; then
     cp "${CONFIGURATION_PATH}" /etc/salt/minion.d/minion.conf
 fi
 
-apt-get --quiet 2 install salt-minion
+grep --quiet CentOS /etc/os-release && CENTOS=true || CENTOS=false
+
+if [ "${CENTOS}" = true ]; then
+    yum list installed salt-repo-latest && REPOSITORY_INSTALLED=true || REPOSITORY_INSTALLED=false
+
+    if [ "${REPOSITORY_INSTALLED}" = false ]; then
+        yum install --assumeyes https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm
+    fi
+
+    yum list installed salt-minion && MINION_INSTALLED=true || MINION_INSTALLED=false
+
+    if [ "${MINION_INSTALLED}" = false ]; then
+        yum install --assumeyes salt-minion
+    fi
+else
+    apt-get --quiet 2 install salt-minion
+fi
