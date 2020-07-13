@@ -40,3 +40,4 @@ postgresql
 ntopng
 collectl
 clickhouse
+Gearman
