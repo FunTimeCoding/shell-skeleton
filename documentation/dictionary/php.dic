@@ -9,3 +9,12 @@ phpbrew
 pgsql
 dbname
 laravel
+guzzlehttp
+nikic
+webonyx
+amqp
+amqplib
+bcmath
+mutators
+rdkafka
+librdkafka
