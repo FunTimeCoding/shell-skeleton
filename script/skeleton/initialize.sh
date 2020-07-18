@@ -37,4 +37,5 @@ ${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh 
 # shellcheck disable=SC1117
 ${SED} --in-place --expression "s/bin\/ss/bin\/${INITIALS}/g" README.md Dockerfile
 git mv lib/shell_skeleton.sh "lib/${UNDERSCORE}.sh"
+git mv spec/shell-skeleton_spec.sh "spec/${DASH}_spec.sh"
 git mv bin/ss "bin/${INITIALS}"
