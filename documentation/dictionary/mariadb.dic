@@ -1,2 +1,4 @@
 mariadb
 mysqldump
+mysqld
+percona

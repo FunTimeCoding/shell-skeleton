@@ -36,3 +36,5 @@ chroot
 chsh
 stdin
 sqlite
+dirmngr
+umask
