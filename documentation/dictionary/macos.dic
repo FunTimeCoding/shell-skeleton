@@ -1,3 +1,4 @@
 networksetup
 listallhardwareports
 getifaddr
+en0

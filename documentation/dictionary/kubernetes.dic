@@ -1,0 +1,9 @@
+kubernetes
+kubelet
+kubeadm
+kubectl
+kube
+daemonset
+imagePullSecrets
+regcred
+svc
