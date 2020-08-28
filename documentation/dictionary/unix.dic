@@ -38,3 +38,4 @@ stdin
 sqlite
 dirmngr
 umask
+dnsmasq
