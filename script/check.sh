@@ -121,7 +121,7 @@ if [ ! "${EMPTY_FILES}" = '' ]; then
 fi
 
 # shellcheck disable=SC2016
-TO_DOS=$(${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
+TO_DOS=$(${FIND} . -regextype posix-extended -type f -regex "${INCLUDE_FILTER}" -exec sh -c 'grep -Hrn TODO: "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
 if [ ! "${TO_DOS}" = '' ]; then
     echo
@@ -154,4 +154,10 @@ if [ "${CONCERN_FOUND}" = true ]; then
     echo "Warning level concern(s) found." >&2
 
     exit 2
+fi
+
+if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+    script/python/check.sh --ci-mode
+else
+    script/python/check.sh
 fi
