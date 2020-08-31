@@ -156,8 +156,10 @@ if [ "${CONCERN_FOUND}" = true ]; then
     exit 2
 fi
 
-if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    script/python/check.sh --ci-mode
-else
-    script/python/check.sh
+if [ -f script/python/check.sh ]; then
+    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+        script/python/check.sh --ci-mode
+    else
+        script/python/check.sh
+    fi
 fi
