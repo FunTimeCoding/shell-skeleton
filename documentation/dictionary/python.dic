@@ -20,6 +20,7 @@ mypy
 lxml
 passlib
 sitepackages
+aiohttp
 
 # pytest
 pytest
@@ -54,3 +55,8 @@ applicationid
 envlist
 testenv
 deps
+
+# sqlalchemy
+pymysql
+sqlalchemy
+tablename

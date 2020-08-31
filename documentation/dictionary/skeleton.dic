@@ -7,10 +7,6 @@ JenkinsTools
 LowerCaseSeparated
 UpperCaseSeparated
 ic
-ShellSkeleton
-ss
-ps
-pu
 src
 LanguageExample
 XmlLibrary
@@ -18,6 +14,11 @@ SpecialName
 MultiWordName
 CamelCaseConvention
 CHANGELOG
+ShellSkeleton
+ss
+PythonSkeleton
+ps
 pyskel
-vt
+pu
 VirtualizationTools
+vt
