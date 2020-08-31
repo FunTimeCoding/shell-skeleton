@@ -21,6 +21,7 @@ lxml
 passlib
 sitepackages
 aiohttp
+windll
 
 # pytest
 pytest
