@@ -47,3 +47,5 @@ multiraid
 devfs
 pxelinux
 dkms
+libsqlite3
+dev
