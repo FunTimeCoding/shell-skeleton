@@ -46,3 +46,5 @@ logstash
 kibana
 filebeat
 metricbeat
+nodesource
+StatsD
