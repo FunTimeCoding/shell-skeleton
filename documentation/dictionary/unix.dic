@@ -39,3 +39,7 @@ sqlite
 dirmngr
 umask
 dnsmasq
+su
+nc
+chown
+multitail

@@ -11,3 +11,4 @@ syslinux
 ifdata
 dhclient
 ip
+systemctl
