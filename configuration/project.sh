@@ -62,3 +62,5 @@ INCLUDE_FILTER="^\.\/((src|test|benchmark|tests|spec|lib|debian|configuration|do
 export INCLUDE_FILTER
 INCLUDE_STILL_FILTER='^.*\/__pycache__\/.*$'
 export INCLUDE_STILL_FILTER
+EXCLUDE_DOCUMENTATION_FILTER='^\.\/(documentation\/dictionary)\/.*$'
+export EXCLUDE_DOCUMENTATION_FILTER
