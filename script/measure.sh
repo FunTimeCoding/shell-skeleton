@@ -126,6 +126,15 @@ if [ "${1}" = --ci-mode ]; then
         echo "Warning: DUPLICATED_LINES_DENSITY ${DUPLICATED_LINES_DENSITY}"
     fi
 
+    QUALITY_GATES=$(curl --silent --user "${SONAR_TOKEN}:" "${SONAR_SERVER}/api/qualitygates/project_status?projectKey=${PROJECT_NAME_DASH}")
+    QUALITY_GATES_STATUS=$(echo "${QUALITY_GATES}" | jq --raw-output '.projectStatus.status')
+
+    if [ ! "${QUALITY_GATES_STATUS}" = 'OK' ]; then
+        CONCERN_FOUND=true
+        echo "Warning: QUALITY_GATES_STATUS ${QUALITY_GATES_STATUS}"
+        echo "${QUALITY_GATES}" | jq --raw-output '.projectStatus.conditions[] | select(.status != "OK") | .metricKey + " " + .actualValue + "/" + .errorThreshold'
+    fi
+
     if [ "${CONCERN_FOUND}" = true ]; then
         echo
         echo "Concern(s) of category WARNING found." >&2
