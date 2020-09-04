@@ -17,10 +17,12 @@ CHANGELOG
 ShellSkeleton
 ss
 PythonSkeleton
-ps
-pyskel
+pysk
+PythonUtility
 pu
 VirtualizationTools
 vt
 LoggingTools
 lt
+ChatBridge
+cb
