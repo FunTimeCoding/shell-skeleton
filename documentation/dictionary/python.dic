@@ -18,6 +18,7 @@ python3
 gitpython
 mypy
 lxml
+uwsgi
 passlib
 sitepackages
 aiohttp

@@ -1,1 +1,6 @@
 snuba
+Symbolicator
+eventstream
+redissnuba
+ratelimits
+ratelimiter
