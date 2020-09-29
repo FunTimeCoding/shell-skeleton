@@ -163,3 +163,11 @@ if [ -f script/python/check.sh ]; then
         script/python/check.sh
     fi
 fi
+
+if [ -f script/php/check.sh ]; then
+    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+        script/php/check.sh --ci-mode
+    else
+        script/php/check.sh
+    fi
+fi
