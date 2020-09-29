@@ -1,6 +1,7 @@
 FROM alpine:3.7
 MAINTAINER Alexander Reitzel
 WORKDIR /usr/src
-COPY lib lib
-COPY bin bin
-CMD ["/usr/src/bin/ss"]
+COPY lib shell-skeleton/lib
+COPY bin shell-skeleton/bin
+WORKDIR /usr/src/shell-skeleton
+CMD ["bin/ss"]
