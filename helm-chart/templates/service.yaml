@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # This used to be shell-skeleton-service to be better distinguishable, but a suffix of the kind that it is seems redundant. It also determines the cluster domain.
+  name: shell-skeleton
+spec:
+  selector:
+    app: shell-skeleton-label
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

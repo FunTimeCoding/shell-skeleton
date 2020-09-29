@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # This used to be shell-skeleton-deployment to be better distinguishable, but a suffix of the kind that it is seems redundant.
+  name: shell-skeleton
+  labels:
+    app: shell-skeleton-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shell-skeleton-label
+  template:
+    metadata:
+      labels:
+        app: shell-skeleton-label
+    spec:
+      containers:
+      - name: shell-skeleton
+        image: '{{ .Values.ImagePrefix }}/shell-skeleton:{{ .Chart.AppVersion }}'
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: regcred

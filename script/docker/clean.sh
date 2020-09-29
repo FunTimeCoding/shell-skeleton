@@ -8,14 +8,14 @@ SCRIPT_DIRECTORY=$(
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
-script/docker/remove.sh
+INSTANCES=$(docker ps --all | grep "${PROJECT_NAME_DASH}" | awk '{ print $1 }')
 
-# Remove image.
-docker images | grep --quiet "${PROJECT_NAME_DASH}" && FOUND=true || FOUND=false
+for INSTANCE in ${INSTANCES}; do
+    docker rm "${INSTANCE}"
+done
 
-if [ "${FOUND}" = true ]; then
-    docker rmi "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}"
-fi
+IMAGES=$(docker images | grep "${PROJECT_NAME_DASH}" | awk '{ print $1 }')
 
-# Remove dangling image identifiers, and more.
-docker system prune
+for IMAGE in ${IMAGES}; do
+    docker rmi "${IMAGE}"
+done

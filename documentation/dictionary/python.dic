@@ -24,6 +24,7 @@ sitepackages
 aiohttp
 windll
 pysqlite
+typer
 
 # pytest
 pytest

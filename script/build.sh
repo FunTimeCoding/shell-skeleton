@@ -1,13 +1,8 @@
 #!/bin/sh -e
 
-rm -rf build
-script/check.sh --ci-mode
-script/measure.sh --ci-mode
-script/test.sh --ci-mode
-#SYSTEM=$(uname)
-#
-# TODO: Needs polish.
-#if [ "${SYSTEM}" = Linux ]; then
-#    script/debian/package.sh
-#    script/docker/build.sh
-#fi
+# TODO: Run check, measure and test inside a Docker CI target. Do not pollute the production image.
+script/shell/build.sh
+
+if [ "${1}" = --ci-mode ]; then
+    script/docker/build.sh --ci-mode
+fi
