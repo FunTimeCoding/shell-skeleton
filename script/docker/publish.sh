@@ -17,12 +17,20 @@ if [ "${GIT_TAG}" = '' ]; then
     exit 1
 fi
 
-docker tag "${PROJECT_NAME_DASH}-snapshot" "${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
-docker tag "${PROJECT_NAME_DASH}-snapshot" "${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:latest"
+git config --get remote.origin.url | grep --quiet github.com && IS_GITHUB=true || IS_GITHUB=false
 
-docker push "${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
-docker push "${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:latest"
+if [ "${IS_GITHUB}" = 'true' ]; then
+    REGISTRY_SERVER='ghcr.io'
+else
+    REGISTRY_SERVER="${PRIVATE_REGISTRY_PASSWORD}"
+fi
 
-# Clean up local Docker tags
-docker rmi "${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
-docker rmi "${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:latest"
+docker tag "${PROJECT_NAME_DASH}-snapshot" "${REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
+docker tag "${PROJECT_NAME_DASH}-snapshot" "${REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:latest"
+
+docker push "${REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
+docker push "${REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:latest"
+
+# Clean up local tags
+docker rmi "${REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
+docker rmi "${REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:latest"
