@@ -19,7 +19,13 @@ ss
 PythonSkeleton
 pysk
 PythonUtility
-pu
+pyut
+PhpSkeleton
+phsk
+PhpUtility
+phut
+PhpWebServiceSkeleton
+pwss
 VirtualizationTools
 vt
 LoggingTools

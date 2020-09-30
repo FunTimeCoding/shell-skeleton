@@ -1,7 +1,7 @@
-FROM debian
+FROM alpine:3.7
 MAINTAINER Alexander Reitzel
-ADD script/docker/provision.sh /root/provision.sh
-RUN chmod +x /root/provision.sh
-RUN /root/provision.sh
-ADD . /shell-skeleton
-ENTRYPOINT ["/shell-skeleton/bin/ss"]
+WORKDIR /usr/src
+COPY lib shell-skeleton/lib
+COPY bin shell-skeleton/bin
+WORKDIR /usr/src/shell-skeleton
+CMD ["bin/ss"]

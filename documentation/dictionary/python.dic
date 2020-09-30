@@ -25,6 +25,8 @@ aiohttp
 windll
 pysqlite
 typer
+tempfile
+TemporaryDirectory
 
 # pytest
 pytest
@@ -34,6 +36,8 @@ xunit
 addopts
 junitxml
 coveragerc
+lf
+capfd
 
 # pylint
 pylint
