@@ -23,7 +23,8 @@ export PROJECT_NAME_UNDERSCORE
 PROJECT_NAME_INITIALS=$(echo "${PROJECT_NAME_CAMEL}" | ${SED} 's/\([A-Z]\)[a-z]*/\1/g' | tr '[:upper:]' '[:lower:]')
 BLOCKED_INITIALS='ps
 pu
-fg'
+fg
+gs'
 
 echo "${PROJECT_NAME_INITIALS}" | grep --quiet "^${BLOCKED_INITIALS}$" && ARE_INITIALS_BLOCKED=true || ARE_INITIALS_BLOCKED=false
 
